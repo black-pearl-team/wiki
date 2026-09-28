@@ -22,7 +22,7 @@ dateCreated: 2021-01-05T08:10:04.873Z
 
 该功能在不同端均有实用场景，比如大家经常使用到的搜索引擎中界面输入框的实时下拉列表联想词展示。
 
-![google-search.png](/technology/tools/libs/debounce/google-search.png =65%x)
+<img src="/technology/tools/libs/debounce/google-search.png" alt="google-search.png" width="65%">
 
 # 实现核心功能
 

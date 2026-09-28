@@ -46,7 +46,7 @@ dateCreated: 2020-12-20T10:10:38.892Z
 
 很可能代码超过500行。。。。。。
 
-![multiple-responsibilities.jpeg](/tech/componentization/multiple-responsibilities.jpeg =45%x)
+<img src="/tech/componentization/multiple-responsibilities.jpeg" alt="multiple-responsibilities.jpeg" width="45%">
 
 不要关闭电灯开关，因为这个开关同样作用于电梯。
 
@@ -62,7 +62,7 @@ dateCreated: 2020-12-20T10:10:38.892Z
 
 松耦合是我们设计应用结构和组件之间关系的目标。
 
-![loosely-coupled.jpeg](/tech/componentization/loosely-coupled.jpeg =40%x)
+<img src="/tech/componentization/loosely-coupled.jpeg" alt="loosely-coupled.jpeg" width="40%">
 
 **松耦合** 会带来以下好处：
 
@@ -74,7 +74,7 @@ dateCreated: 2020-12-20T10:10:38.892Z
   
 相反，紧耦合的系统会失去上面描述的好处。主要缺点是很难修改高度依赖于其他组件的组件。即使是一处修改，也可能导致一系列的依赖组件需要修改。
 
-![tighly-coupled.jpeg](/tech/componentization/tighly-coupled.jpeg =40%x)
+<img src="/tech/componentization/tighly-coupled.jpeg" alt="tighly-coupled.jpeg" width="40%">
 
 **封装** 或 **信息隐藏** 是如何设计组件的基本原则，也是松耦合的关键。
 
@@ -122,7 +122,7 @@ prop 甚至可以是一个组件构造函数。组件可以处理其他组件的
 
 把一组小的片段，联合起来，创建一个更大个儿。
 
-![composable.jpeg](/tech/componentization/composable.jpeg =40%x)
+<img src="/tech/componentization/composable.jpeg" alt="composable.jpeg" width="40%">
 
 ## 组合的好处
 - 单一责任 (phone -> condition)
@@ -194,7 +194,7 @@ emm......
 - 浏览代码
 - 咨询作者...
 
-![expressiveness.jpeg](/tech/componentization/expressiveness.jpeg =50%x)
+<img src="/tech/componentization/expressiveness.jpeg" alt="expressiveness.jpeg" width="50%">
 
 组件在楼梯上的位置越低，意味着需要更多的努力才能理解。
 
@@ -212,7 +212,7 @@ emm......
 - 或任何其他原因
 
 组件越复杂，就越需要验证和重构。  
-![improvement.jpeg](/tech/componentization/improvement.jpeg =60%x)
+<img src="/tech/componentization/improvement.jpeg" alt="improvement.jpeg" width="60%">
 
 究极解决方案：编写可靠的组件 ✔️ 
 

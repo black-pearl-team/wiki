@@ -71,7 +71,7 @@ dateCreated: 2021-01-11T15:39:33.917Z
 
 而 Webpack 作为项目模块的打包工具，依赖丰富的生态插件支持，可以配合脚本处理前端项目依赖、组件和规范化等诸多问题，我们可以以较小的代价完成上述流程的运作。
 
-![webpack.png](/technology/web/webpack/webpack.png =95%x)
+<img src="/technology/web/webpack/webpack.png" alt="webpack.png" width="95%">
 
 # 核心功能
 

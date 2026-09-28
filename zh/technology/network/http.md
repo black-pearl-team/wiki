@@ -36,7 +36,7 @@ HTTP1.x 的 header 带有大量信息，而且每次都要重复发送（当请�
 
 HPACK 算法是专门为 HTTP/2 服务的，它主要的亮点有两个：
 - 首先是在服务器和客户端之间建立【哈希表】，将用到的字段存放在这张表中，那么在传输的时候对于之前出现过的值，只需要把索引(比如0，1，2，...)传给对方即可，对方拿到索引查表就行了。这种传索引的方式，可以说让请求头字段得到极大程度的精简和复用。
-![compressheader.png](/technology/network/http/compressheader.png =70%x)
+<img src="/technology/network/http/compressheader.png" alt="compressheader.png" width="70%">
 
     > 小贴士
     HTTP/2 当中废除了起始行的概念，将起始行中的请求方法、URI、状态码转换成了头字段，不过这些字段都有一个":"前缀，用来和其它请求头区分开。
@@ -60,7 +60,7 @@ HPACK 算法是专门为 HTTP/2 服务的，它主要的亮点有两个：
 
 ## 三、设置请求优先级
 HTTP/2 中传输的帧结构如下图所示:
-![binarystream.png](/technology/network/http/binarystream.png =65%x)
+<img src="/technology/network/http/binarystream.png" alt="binarystream.png" width="65%">
 每个帧分为**帧头**和**帧体**。先是三个字节的帧长度，这个长度表示的是帧体的长度。
 
 然后是**帧类型**，大概可以分为数据帧和控制帧两种。
@@ -71,7 +71,7 @@ HTTP/2 中传输的帧结构如下图所示:
 后 4 个字节是 `Stream ID`, 也就是**流标识符**，有了它，接收方就能从乱序的二进制帧中选择出 ID 相同的帧，按顺序组装成请求/响应报文。
 
 以一个普通的请求-响应过程为例来说明：
-![request&response.png](/technology/network/http/request&response.png =50%x)
+<img src="/technology/network/http/request&amp;response.png" alt="request&amp;response.png" width="50%">
 最开始两者都是空闲状态，当客户端发送 Headers 帧后，开始分配 `Stream ID`, 此时客户端的流打开，服务端接收之后服务端的流也打开，两端的流都打开之后，就可以互相传递数据帧和控制帧了。
 
 当客户端要关闭时，向服务端发送 `END_STREAM` 帧，进入半关闭状态, 这个时候客户端只能接收数据，而不能发送数据。
@@ -107,7 +107,7 @@ HTTPS协议，它比HTTP协议相比多了以下优势：
 **所谓HTTPS，其实就是身披SSL协议这层外壳的HTTP。**
 在采用SSL后，HTTP就拥有了HTTPS的加密、证书和完整性保护这些功能。
 
-![https.png](/technology/network/http/https.png  =50%x)
+<img src="/technology/network/http/https.png" alt="https.png" width="50%">
 
 TLS/SSL 的功能实现主要依赖于三类基本算法：
 - 非对称加密：实现身份认证和密钥协商
@@ -128,12 +128,12 @@ TLS/SSL 的功能实现主要依赖于三类基本算法：
 - 数字签名能确定消息的完整性,证明数据是否未被篡改过。
 
     **数字签名如何生成：**
-    ![generatesignature.png](/technology/network/http/generatesignature.png =85%x)
+    <img src="/technology/network/http/generatesignature.png" alt="generatesignature.png" width="85%">
 
     发送方：将一段文本先 **用 Hash 函数生成消息摘要**，然后 **用发送者的私钥加密生成数字签名**，与原文一起传送给接收者。
 
     **校验数字签名流程：**
-    ![checksignature.png](/technology/network/http/checksignature.png =85%x)
+    <img src="/technology/network/http/checksignature.png" alt="checksignature.png" width="85%">
 
     接收方：接收者只有 **用发送者的公钥才能解密被加密的摘要信息**，然后 **用HASH函数对收到的原文产生一个摘要信息**，与上一步得到的摘要信息对比。如果相同，则说明收到的信息是完整的，在传输过程中没有被修改，否则说明信息被修改过，因此数字签名能够验证信息的完整性。
 
@@ -152,7 +152,7 @@ TLS/SSL 的功能实现主要依赖于三类基本算法：
 - 客户端 Client 读取证书中的相关的明文信息，采用相同的散列函数计算得到信息摘要，然后，利用对应 CA 的公钥解密签名数据，对比证书的**信息摘要**，如果一致，则可以确认证书的合法性，即服务器的公开密钥是值得信赖的。
 （数字证书认证机构的公开密钥已事先植入到浏览器里了。）
 - 客户端还会验证证书相关的域名信息、有效时间等信息; 客户端会内置信任CA的证书信息(包含公钥)，如果CA不被信任，则找不到对应 CA的证书，证书也会被判定非法。
-![certificateauthority.png](/technology/network/http/certificateauthority.png =75%x)
+<img src="/technology/network/http/certificateauthority.png" alt="certificateauthority.png" width="75%">
 
 
 参考链接：[深入理解HTTPS工作原理](https://github.com/ljianshu/Blog/issues/50)
@@ -166,4 +166,4 @@ TLS/SSL 的功能实现主要依赖于三类基本算法：
 - HTTPS 是对 HTTP 的安全方面优化
 - HTTP2.0 是对 HTTP 的性能方面优化
 
-![summary.png](/technology/network/http/summary.png =65%x)
+<img src="/technology/network/http/summary.png" alt="summary.png" width="65%">

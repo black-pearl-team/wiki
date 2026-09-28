@@ -108,7 +108,7 @@ Docker 采用客户端 - 服务端架构设计，这表示它会实现一个命�
 
 接下来你需要运行这个镜像，在虚拟机中这很好理解，VMware 会从 iso 压缩包中安装相应的系统然后运行，接着你会进入到该系统的可视化界面。但是在 Docker 中，这个运行流程变得更加纯粹和单一，你可能只是运行了一个后台程序（而不是多个），Docker 将这种运行中的状态称之为容器（**container**），也就是一个镜像的实例。
 
-![architecture.svg](/technology/saas/docker/architecture.svg =90%x)
+<img src="/technology/saas/docker/architecture.svg" alt="architecture.svg" width="90%">
 
 上图中的 `docer pull` 和 `docker run` 对应从 Registry 下载镜像和通过镜像运行对应操作系统环境这两个步骤，`docker build` 制作镜像的命令，我们在镜像小节可以学习到细节。
 
@@ -187,7 +187,7 @@ CONTAINER ID        IMAGE                                 COMMAND               
 
 而虚拟机则是运行了一个完整的操作系统，你可以将之视为一个取得了操作系统所有资源授权的用户拿着宿主机提供的资源实现了独立的操作系统功能，这意味着，你在虚拟机中运行的程序，会使宿主机承担更多的开销。
 
-![container@2x.png](/technology/saas/docker/container@2x.png =45%x)
+<img src="/technology/saas/docker/container@2x.png" alt="container@2x.png" width="45%">
 
 ## 镜像
 
@@ -799,7 +799,7 @@ ufw status
 
 ## 持续集成
 
-![inner-outer-loop.png](/technology/saas/docker/inner-outer-loop.png =90%x)
+<img src="/technology/saas/docker/inner-outer-loop.png" alt="inner-outer-loop.png" width="90%">
 
 ## 私有镜像服务
 

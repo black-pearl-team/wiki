@@ -15,7 +15,7 @@ dateCreated: 2020-12-03T10:46:33.305Z
 - 转换为字符串
 - 转换为数字
 
-![primitivetypesconvert](/technology/web/type-conversion/primitivetypesconvert.jpg =80%x)
+<img src="/technology/web/type-conversion/primitivetypesconvert.jpg" alt="primitivetypesconvert" width="80%">
 
 ### 对象转原始类型
 
@@ -27,7 +27,7 @@ dateCreated: 2020-12-03T10:46:33.305Z
 
 #### valueOf()
 方法返回指定对象的原始值。如果对象没有原始值，则valueOf将返回对象本身。
-![valueof](/technology/web/type-conversion/valueof.jpg =65%x)
+<img src="/technology/web/type-conversion/valueof.jpg" alt="valueof" width="65%">
 
 #### toString()
 返回一个表示该对象的字符串。
