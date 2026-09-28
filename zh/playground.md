@@ -8,6 +8,8 @@ editor: markdown
 dateCreated: 2020-11-30T15:13:25.120Z
 ---
 
+[English](/playground.md) · **中文**
+
 # Markdown
 
 ## 代码块

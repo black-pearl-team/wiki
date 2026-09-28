@@ -8,6 +8,8 @@ editor: markdown
 dateCreated: 2022-08-17T12:46:36.022Z
 ---
 
+[English](/readings/cognition/deep-work.md) · **中文**
+
 # DEEP WORK
 
 ## 概念

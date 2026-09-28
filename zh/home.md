@@ -8,9 +8,11 @@ editor: markdown
 dateCreated: 2020-11-30T13:27:26.146Z
 ---
 
+[English](/home.md) · **中文**
+
 # 引言
 
-本维基记录了[`@海德拉`](https://blog.jovipro.com/)和[`@海扎克`](https://hijack.rocks/)两位同学的成长积累。所有内容来源于我们各自维护的印象笔记本，经过梳理后发布于此。
+本维基记录了[`@海德拉`](https://l-jovi.github.io/)和[`@海扎克`](https://github.com/HiJack-M)两位同学的成长积累。所有内容来源于我们各自维护的印象笔记本，经过梳理后发布于此。
 
 - **关于我们**
   我们从事互联网技术研发、产品和设计方向，希望成为不放弃思考的人，并能够为这个世界和所生活在其中的人们做出贡献。
@@ -37,39 +39,39 @@ dateCreated: 2020-11-30T13:27:26.146Z
 
 ### 数据结构/算法
 
-- [各类排序算法总结 *《大话数据结构》第九章的笔记*](/zh/technology/algorithm/sort)
+- [各类排序算法总结 *《大话数据结构》第九章的笔记*](/zh/technology/algorithm/sort.md)
 {.links-list}
 
 ### 客户端/前端
 
-- [JavaScript 内存泄漏 - 垃圾回收 - ES6 处理方法 *JavaScript 内存回收、GC 的原理和处理方法*](/zh/technology/web/performance)
-- [JavaScript 类型转换 *其实也可以看成玄学*](/zh/technology/web/type-conversion)
-- [现代浏览器 - 深入理解 *对 Mariko Kosaka 所著 Inside look at modern web browser 的理解*](/zh/technology/web/inside-look-at-browser)
-- [Chrome 开发者工具使用 *浏览器开发者调试工具的使用小指南*](/zh/technology/web/chrome-devtools)
+- [JavaScript 内存泄漏 - 垃圾回收 - ES6 处理方法 *JavaScript 内存回收、GC 的原理和处理方法*](/zh/technology/web/performance.md)
+- [JavaScript 类型转换 *其实也可以看成玄学*](/zh/technology/web/type-conversion.md)
+- [现代浏览器 - 深入理解 *对 Mariko Kosaka 所著 Inside look at modern web browser 的理解*](/zh/technology/web/inside-look-at-browser.md)
+- [Chrome 开发者工具使用 *浏览器开发者调试工具的使用小指南*](/zh/technology/web/chrome-devtools.md)
 {.links-list}
 
 ### 操作系统
 
 ### 网络
 
-- [HTTP *HTTP1.x、HTTP2.0、HTTPS 区别和特性*](/zh/technology/network/http)
-- [AutoSSH *提供反向代理服务并解决 SSH 超时断开连接的问题*](/zh/technology/network/autossh)
+- [HTTP *HTTP1.x、HTTP2.0、HTTPS 区别和特性*](/zh/technology/network/http.md)
+- [AutoSSH *提供反向代理服务并解决 SSH 超时断开连接的问题*](/zh/technology/network/autossh.md)
 {.links-list}
 
 ### 服务化
 
-- [Docker 应用和原理 *使用容器化技术搭建微服务*](/zh/technology/saas/docker)
+- [Docker 应用和原理 *使用容器化技术搭建微服务*](/zh/technology/saas/docker.md)
 {.links-list}
 
 ### 应用设计
 
-- [Componentization *组件设计原则*](/zh/technology/design/component-design)
+- [Componentization *组件设计原则*](/zh/technology/design/component-design.md)
 {.links-list}
 
 ### 工具
 
-- [实用在线工具 *记录工作和生活常用的在线工具，长期迭代维护*](/zh/technology/tools/online)
-- [去抖动（Debounce） *用 JavaScript 实现 Debounce 功能*](/zh/technology/tools/libs/debounce)
+- [实用在线工具 *记录工作和生活常用的在线工具，长期迭代维护*](/zh/technology/tools/online.md)
+- [去抖动（Debounce） *用 JavaScript 实现 Debounce 功能*](/zh/technology/tools/libs/debounce.md)
 {.links-list}
 
 ## 游戏馆
@@ -82,7 +84,7 @@ dateCreated: 2020-11-30T13:27:26.146Z
   
 ### 休闲区
 
-- [2048 体验版 *HTML5 实现的 2048 Web 版本，**WASD** 操作，没有积分功能 :)*](/zh/games/casual/2048)
+- [2048 体验版 *HTML5 实现的 2048 Web 版本，**WASD** 操作，没有积分功能 :)*](/zh/games/casual/2048.html)
 {.links-list}
 
 

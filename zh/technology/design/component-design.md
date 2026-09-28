@@ -8,6 +8,8 @@ editor: markdown
 dateCreated: 2020-12-20T10:10:38.892Z
 ---
 
+[English](/technology/design/component-design.md) · **中文**
+
 # 前言
 
 基于组件的开发是高效的：一个复杂的系统是由专门的、易于管理的组件构建的。

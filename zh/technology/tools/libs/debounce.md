@@ -8,6 +8,8 @@ editor: markdown
 dateCreated: 2021-01-05T08:10:04.873Z
 ---
 
+[English](/technology/tools/libs/debounce.md) · **中文**
+
 # 什么是去抖动
 
 去抖动（Debounce）是为了性能和交互体验考量，将高频的多个连续调用序列分组提取为单次调用的功能[^1]。

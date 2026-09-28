@@ -8,6 +8,8 @@ editor: markdown
 dateCreated: 2022-12-14T13:50:22.920Z
 ---
 
+[English](/readings/novel/the-high-window.md) · **中文**
+
 
 ## 介绍
 

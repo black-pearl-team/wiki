@@ -8,6 +8,8 @@ editor: markdown
 dateCreated: 2020-12-20T11:34:33.734Z
 ---
 
+[English](/technology/web/chrome-devtools.md) · **中文**
+
 # 前言
 
 此文简要罗列了 Chrome 开发者工具的部分功能，看起来有点多，使用多了就记住了。（不包括 performance，这一块计划单独写一篇）。

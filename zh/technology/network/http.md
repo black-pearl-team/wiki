@@ -8,6 +8,8 @@ editor: markdown
 dateCreated: 2020-11-30T15:34:57.219Z
 ---
 
+[English](/technology/network/http.md) · **中文**
+
 # HTTP1.0 和 HTTP1.1 的主要区别
 
 ## 长连接

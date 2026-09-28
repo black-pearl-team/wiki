@@ -8,6 +8,8 @@ editor: markdown
 dateCreated: 2022-12-26T03:47:05.144Z
 ---
 
+[English](/readings/novel/the-big-sleep.md) · **中文**
+
 
 ## 介绍
 

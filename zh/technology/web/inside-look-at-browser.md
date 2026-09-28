@@ -8,6 +8,8 @@ editor: markdown
 dateCreated: 2020-12-07T07:23:09.114Z
 ---
 
+[English](/technology/web/inside-look-at-browser.md) · **中文**
+
 # 前言
 
 此文可看做 Chrome 开发者 Mariko Kosaka 的[《Inside look at modern web browser》](https://developers.google.com/web/updates/2018/09/inside-browser-part1)的译文。

@@ -8,6 +8,8 @@ editor: markdown
 dateCreated: 2020-12-03T10:46:33.305Z
 ---
 
+[English](/technology/web/type-conversion.md) · **中文**
+
 ### 在 JS 中类型转换只有三种情况，分别是：
 - 转换为布尔值
 - 转换为字符串

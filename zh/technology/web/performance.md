@@ -8,6 +8,8 @@ editor: markdown
 dateCreated: 2020-11-30T15:05:19.322Z
 ---
 
+[English](/technology/web/performance.md) · **中文**
+
 # 内存泄漏
 
 程序的运行需要内存。只要程序提出要求，操作系统或者运行时（runtime）就必须供给内存。

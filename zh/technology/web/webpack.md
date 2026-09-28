@@ -8,6 +8,8 @@ editor: markdown
 dateCreated: 2021-01-11T15:39:33.917Z
 ---
 
+[English](/technology/web/webpack.md) · **中文**
+
 # 引入
 
 不同于以往对页面展示交互和数据表现的开发，越来越完善的概念和技术被注入到目前的大前端生态中。
