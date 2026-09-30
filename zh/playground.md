@@ -49,8 +49,8 @@ const p = new Promise((resolve, reject) => {
 # 表情符号
 
 `:apple:` will produce :apple:
-`:dog`: will produce :dog:
-`:leaves`: will produce :leaves:
+`:dog:` will produce :dog:
+`:leaves:` will produce :leaves:
 
 # Tab 组
 
