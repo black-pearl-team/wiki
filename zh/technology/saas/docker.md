@@ -22,7 +22,7 @@ Docker 是一个可以用作[开发和发布应用、部署应用的开源平台
 
 ## 安装
 
-为了更快的理解 Docker 的用途和功能，我们先完成安装流程，Docker 支持多平台的安装[^2]。
+为了更快地理解 Docker 的用途和功能，我们先完成安装流程，Docker 支持多平台的安装[^2]。
 
 鉴于容器多用于服务化环境，我们这里选择 Linux - Ubuntu 作为安装 Docker 的操作系统，其他 Linux 发行版环境可以[参考官网自行选择](https://docs.docker.com/engine/install/#server)[^3]。
 
@@ -44,11 +44,11 @@ $ apt-get install \
     software-properties-common
 ```
 
-2. 添加 Docker 的官方 GPG 秘钥。
+2. 添加 Docker 的官方 GPG 密钥。
 ```bash
 $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 ```
-验证指纹秘钥是否正确，通过下面的命令搜索 `9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88` 是否匹配。
+验证指纹密钥是否正确，通过下面的命令搜索 `9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88` 是否匹配。
 ```bash
 $ apt-key fingerprint 0EBFCD88
 
@@ -110,7 +110,7 @@ Docker 采用客户端 - 服务端架构设计，这表示它会实现一个命�
 
 <img src="/technology/saas/docker/architecture.svg" alt="architecture.svg" width="90%">
 
-上图中的 `docer pull` 和 `docker run` 对应从 Registry 下载镜像和通过镜像运行对应操作系统环境这两个步骤，`docker build` 制作镜像的命令，我们在镜像小节可以学习到细节。
+上图中的 `docker pull` 和 `docker run` 对应从 Registry 下载镜像和通过镜像运行对应操作系统环境这两个步骤，`docker build` 制作镜像的命令，我们在镜像小节可以学习到细节。
 
 ## 简单使用
 
@@ -272,7 +272,7 @@ $ docker run --publish 8000:8080 --detach --name bb bulletinboard:1.0
 
 `--publish 8000:8080` 映射宿主机的 8000 端口到容器的 8080 端口，这意味着通过以 `<protocol>://<ip>:<port>` 形式的网络访问宿主机 8000 端口相当于直接访问到了容器的 8080 端口所在的服务（本案例中为上述 `node server.js` 启用的 Node.js 服务）。
 
-`--detach` 表示以后台形式运行，不会像上述 `/bin/bash` 一样交互式的停留在 Terminal 前台等待用户输入。
+`--detach` 表示以后台形式运行，不会像上述 `/bin/bash` 一样交互式地停留在 Terminal 前台等待用户输入。
 
 `--name bb` 表示给创建的容器起名为 `bb`。
 
@@ -306,7 +306,7 @@ volumes 是官方较为推荐的方式[^8]，因为其完全由 Docker 自行管
 
 最为推荐的理由是，volumes 的技术实现**独立于容器生命周期之外**，换言之，一个使用到 volumes 的容器不会因多了 volumes 而增加体积，容器本身的销毁和重建都不会影响已经存在的 volumes。
 
-下图简单的描述了 volumes 和 bind mounts 间的区别。
+下图简单地描述了 volumes 和 bind mounts 间的区别。
 
 ![types-of-mounts-volume.png](/technology/saas/docker/types-of-mounts-volume.png)
 
@@ -359,7 +359,7 @@ $ docker run -d \
 ```
 上面的命令指定镜像为 `nginx:latest`，通过后台形式创建了一个名为 `devtest` 的容器，并且创建名为 `myvol2` 的 volumes 挂载卷，映射到容器中的目录结构为 `/app`。
 
-这里需要留意 `-v` 参数具备多种语义[^9]。上述命令创建的容器中 `/app` 目录如果本就不存在任何内容，那么 `myvol2` 会实时的映射到该路径中，这意味着，`devtest` 容器创建后在容器内的 `/app` 目录下产生的任何数据都将实时同步到 `myvol2` 中。
+这里需要留意 `-v` 参数具备多种语义[^9]。上述命令创建的容器中 `/app` 目录如果本就不存在任何内容，那么 `myvol2` 会实时地映射到该路径中，这意味着，`devtest` 容器创建后在容器内的 `/app` 目录下产生的任何数据都将实时同步到 `myvol2` 中。
 
 当然，你会想到另一种场景是，如果 `devtest` 容器创建后在 `/app` 内原本就存在内容（一些文件和目录）， 这些内容会直接拷贝到名为 `myvol2` 的挂载卷中。
 
@@ -505,7 +505,7 @@ $ docker network inspect bridge
 ```
 上面打印的内容包含了 IP 和网关的信息，我们主要留意 `Containers` 属性的内容，这正是我们刚刚创建的两个基于 `alpine` 镜像的容器实例所分配的 IP 地址。
 
-其中容器 `alpine1` 分配到的地址为 `172.17.0.2`，`alpine2` 分配到的地址为 `172.17.0.2`。
+其中容器 `alpine1` 分配到的地址为 `172.17.0.2`，`alpine2` 分配到的地址为 `172.17.0.3`。
 
 4. 连接到容器中
 ```bash
@@ -764,7 +764,7 @@ chmod +x /usr/local/bin/ufw-docker
 ufw-docker install
 ```
 
-安装成功后重启，我们发现之前的 Node.js 服务 8000 端口已经无法在外网访问了，符合预期。我们来使用 `ufw-docekr` 添加对该服务容器端口的放行规则。
+安装成功后重启，我们发现之前的 Node.js 服务 8000 端口已经无法在外网访问了，符合预期。我们来使用 `ufw-docker` 添加对该服务容器端口的放行规则。
 
 ```bash
 ufw-docker allow <container_name> 8080
@@ -809,7 +809,7 @@ Docker 提供一种可以存储和分发镜像的平台称为 Registry[^15]，�
 
 ### 构建和使用
 
-依赖官方开源提供的 `registry:2` 镜像，我们可以从中方便的运行容器服务。
+依赖官方开源提供的 `registry:2` 镜像，我们可以从中方便地运行容器服务。
 
 ```bash
 docker run -d -p 5000:5000 --name registry registry:2
@@ -844,7 +844,7 @@ docker pull localhost:5000/myfirstimage
 
 ### 支持 HTTPS
 
-上一节的方法在生产环境中当然是无法使用的，首先我们需要让外部客户端可以访问到主机，而不是用 `locahost` 的方式做单机模拟。
+上一节的方法在生产环境中当然是无法使用的，首先我们需要让外部客户端可以访问到主机，而不是用 `localhost` 的方式做单机模拟。
 
 鉴于 Docker 对 Registry 生产服务的限制，如果要满足外部访问，首先需要对主机的域名支持 TLS[^17]。这里官方推荐使用 [Let’s Encrypt](https://docs.docker.com/registry/deploying/#support-for-lets-encrypt)（一个开源的 CA 提供商）生成主机的私钥和证书。
 
@@ -1114,7 +1114,7 @@ systemd─┬─accounts-daemon─┬─{gdbus}
         ├─systemd-timesyn───{sd-resolve}
         └─systemd-udevd
 ```
-可以留意到，所有进程都被系统服务管理器 systemd 启动，其中 containerd 就是 Docker 产生的进程名，而所有的容器示例，都被名为 containerd-shim 的进程管理，与宿主机的进程隔离。
+可以留意到，所有进程都被系统服务管理器 systemd 启动，其中 containerd 就是 Docker 产生的进程名，而所有的容器实例，都被名为 containerd-shim 的进程管理，与宿主机的进程隔离。
 
 那么 Docker 是如何实现与宿主机的进程隔离呢？我们对刚才的 Go 代码继续添加 namespaces 中提及的进程隔离所依赖的系统调用接口 `clone` 的 [`CLONE_NEWPID`](https://youtu.be/HPuvDm8IC-4?t=670) 参数，并新增一个 Child 进程方便观察结果。
 
