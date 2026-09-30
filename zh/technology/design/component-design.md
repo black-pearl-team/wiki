@@ -39,7 +39,7 @@ dateCreated: 2020-12-20T10:10:38.892Z
 上帝组件：多重责任问题的最坏情况（上帝对象的类比）。  
 上帝组件倾向于了解并做所有事情。你可能会看到它名为  
 
-- ` <Application>`
+- `<Application>`
 - `<Manager>`
 - `<Bigcontainer>`
 - `<Page>`

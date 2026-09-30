@@ -59,7 +59,7 @@ dateCreated: 2020-12-20T11:34:33.734Z
 ### 切换 DevTools 的面板
 
 - 切换左右面板: ctrl + \[ 和 ctrl + \] (Mac 对应 ⌘)
-- ctrl + 1 到 ctrl + 9 可以直接转到编号1...9的面板 (ctrl + 1转到元素面板，ctrl + 4` 转到 网络信息面板等等) P.S.: 默认禁用，DevTools --> Settings --> Preferences --> *Appearance*
+- ctrl + 1 到 ctrl + 9 可以直接转到编号1...9的面板 (ctrl + 1转到元素面板，ctrl + 4 转到 网络信息面板等等) P.S.: 默认禁用，DevTools --> Settings --> Preferences --> *Appearance*
 
 ### 递增/递减
 
@@ -213,7 +213,7 @@ Style面板 --> box-shadow / text-shadow属性 --> 阴影方形符号
 
 ### 插入样式规则的按钮
 
-把鼠标放在样式选择器的选择区域的最后时，显示可以快速的使用 Color 和 Shadow 编辑器添加 CSS 属性的按钮：
+把鼠标放在样式选择器的选择区域的最后时，显示可以快速地使用 Color 和 Shadow 编辑器添加 CSS 属性的按钮：
 
 - text-shadow
 - box-shadow
@@ -251,7 +251,7 @@ Style面板 --> box-shadow / text-shadow属性 --> 阴影方形符号
 
 ![color_palettes.png](/tech/web/chrome-devtools/color_palettes.png)
 
-### 直观的选择你的颜色
+### 直观地选择你的颜色
 
 文本的调色选择器(color 属性) --> Contrast ratio(对比度):
 **文本的颜色** 与 **开发者工具认为这段文本应该有的背景颜色** 之间的对比度
