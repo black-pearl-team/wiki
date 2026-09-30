@@ -26,7 +26,7 @@ p.s.: The list follows the order in which the characters appear; check it whenev
 
 Mrs. Elizabeth Bright Murdock: the client, lost a gold coin.
 
-Jasper Murdock: full beard, "He spent his whole life serving others."
+Jasper Murdock: full beard; remembered as a man who spent his life serving others.
 
 Miss Merle Davis: Mrs. Murdock's secretary.
 
@@ -34,8 +34,8 @@ Linda Conquest (Mrs. Leslie Murdock): the client's daughter-in-law.
 
 Elisha Morningstar: a coin dealer, his office is in the Belfont Building on Ninth Street, downtown Los Angeles.
 
-Lois Magic: in Miss Davis's words, "I only saw her once. She used to share an apartment with Linda. She came here with a gentleman, a Mr. Vannier."
-Vannier: "He lives in Sherman Oaks. At the end of Escamillo Drive. The very end."
+Lois Magic: Miss Davis had met her only once; she used to share an apartment with Linda, and came by with a gentleman, a Mr. Vannier.
+Vannier: lives in Sherman Oaks, at the very end of Escamillo Drive.
 
 Alex Morny: it seems Leslie Murdock owes him twelve thousand. Married Lois Magic.
 
@@ -49,7 +49,7 @@ Shifty: the Morny household's chauffeur.
 
 George Anson Phillips: a private investigation. Room 212, Senger Building, 1924 North Wilcox Avenue, Hollywood. Apartment 204, Florence Apartments, 128 Court Street.
 
-Pietro Palermo: "Owns the funeral parlor. Owns this building and plenty of others. Owns the whole block, as a matter of fact."
+Pietro Palermo: owns the funeral parlor, this building and plenty of others; in fact, the whole block.
 Passmore: the apartment manager.
 
 Jesse Breeze: a detective lieutenant.

@@ -64,20 +64,20 @@ Best enjoyed together with Google's official DevTools docs[^1].
 ### Increment/decrement
 
 Adjusting styles:
-	With the up / down arrow keys, with or without a modifier key, you can increment and decrement numeric values by 0.1, 1 or 10  
+	The up / down arrow keys, alone or with a modifier key, nudge numeric values by 0.1, 1 or 10  
 ![addsub.png](/tech/web/chrome-devtools/addsub.png)
 
 ### Searching in elements, logs, sources & network
 
-Each of the first 4 main panels in DevTools supports the [ctrl] + [f] shortcut, and you can search for information with the matching kind of query:
+The first 4 main panels in DevTools all take [ctrl] + [f], each with its own kind of query:
 
 - In the Elements panel: search by string, selector or XPath
-- In the Console, Network and Source panels: search by case-sensitive strings, or by strings that can be treated as expressions
+- In the Console, Network and Source panels: search by case-sensitive text, or by text read as an expression
 ![find.png](/tech/web/chrome-devtools/find.png)
 
 ## Using Command
 
-The Command menu helps us quickly find the features that are hidden away
+The Command menu is the quick way to reach features that are tucked away
 
 - With Chrome's DevTools open, press Ctrl + Shift + P ( Mac: ⌘ + Shift + P )
 - Use the Run Command option under the DevTools dropdown button
@@ -213,7 +213,7 @@ The curve symbol next to it (if the timing function's value isn't set in this sh
 
 ### Buttons for inserting style rules
 
-When you move the mouse to the end of a style selector's area, buttons show up that let you quickly add CSS properties with the Color and Shadow editors:
+Hover at the end of a style selector's area and buttons appear for adding CSS properties quickly through the Color and Shadow editors:
 
 - text-shadow
 - box-shadow
@@ -254,7 +254,7 @@ Part of what the color picker offers:
 ### Pick your colors visually
 
 The text's color picker (color property) --> Contrast ratio:
-the contrast between **the text's color** and **the background color DevTools thinks this text should have**
+how **the text's color** stands against **the background DevTools assumes for this text**
 
 - A "🚫" next to the number means the contrast is too low
 - A "✅" means the color meets the AA level of *Web Content Accessibility Guidelines (WCAG) 2.0*[^3], which means a contrast ratio of at least 3
@@ -262,8 +262,8 @@ the contrast between **the text's color** and **the background color DevTools th
 
 # Drawer
 
-There's a set of parallel tabs hidden under the main window.
-This set is called the `Drawer`, and it lets you look at the console and more while you're in other panel views.
+Under the main window sits a second row of tabs.
+That row is the `Drawer`, which keeps the console and other tools at hand whichever panel you're in.
 
 ### How to open the Drawer
 While in DevTools (any tab), press `[esc]` to show it, and press `[esc]` again to hide it

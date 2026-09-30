@@ -10,34 +10,36 @@ dateCreated: 2026-09-30T13:35:19.000Z
 
 **English** · [中文](/zh/technology/design/component-design.md)
 
+*Parts of the Chinese page follow Dmitri Pavlutin's article on reliable React components; this English page sums those parts up in our own words instead of translating them back into English.*
+
 # Preface
 
-Component-based development is efficient: a complex system is built out of specialized, easy-to-manage components.
+Building from components is efficient: a complex system is put together from small, manageable parts.
 
-This article is the author's thinking and experience on standardizing components while building a shared front-end component library. It draws on *7 Architectural Attributes of a Reliable React Component*[^1] and picks out a few principles we use often; the original goes into more detail and is worth a read.
+These are the author's thoughts and lessons from standardizing components while building a shared front-end component library. They draw on *7 Architectural Attributes of a Reliable React Component*[^1] and pick out the principles we use most; the original goes into much more detail and is worth a read.
 
 
 # "Single responsibility" principle
 
-> A component has a single responsibility when it has only one reason to change.
+> A component should have just one reason to change.
 
-The single responsibility principle (SRP)[^2] asks that a component have one, and only one, reason to change.
+That's what the single responsibility principle (SRP)[^2] asks for.
 
-The reason: changes to the component stay isolated and under control. It limits the component's size and keeps it focused on one thing, which makes it easier to code, change, reuse and test.  
+Why: changes stay contained, and a small, focused component is easier to write, change, reuse and test.  
 
 *Anti-pattern* (it feels great while you're writing it):
 
-- One component with many responsibilities means less work
+- One component doing many jobs seems like less work
 
-- No need to identify the responsibilities and plan the structure around them
+- You get to skip thinking about responsibilities and structure
 
-- One big component can do everything: no need to create a part for each responsibility
+- One big component handles everything, with no parts to split out
 
-- No splitting, no overhead: no need to create props and callbacks for the split-up components to talk to each other
+- No splitting means no props or callbacks to wire between the parts
 
 
-God component: the worst case of the multiple-responsibility problem (by analogy with the god object).  
-A god component tends to know about and do everything. You might see it named  
+God component: the extreme case of too many responsibilities, named after the god object.  
+It knows about and does everything. You might see it named  
 
 - `<Application>`
 - `<Manager>`
@@ -52,58 +54,58 @@ Don't turn off the light switch, because the same switch also runs the elevator.
 
 # Encapsulation
 
-> An encapsulated component provides props to control its behavior instead of exposing its internal structure.
+> An encapsulated component takes props to control its behavior and keeps its internals to itself.
 
-Coupling is the property of a system that decides how much its components depend on each other. By the degree of that dependency, two kinds of coupling can be told apart:
+Coupling is how much components depend on one another. It comes in two kinds:
 
-- Loose coupling happens when an application's components know little or nothing about other components.
+- Loose coupling: components know little or nothing about each other.
 
-- Tight coupling happens when an application's components know lots of details about each other.
+- Tight coupling: components know a lot of each other's details.
 
-Loose coupling is our goal when we design an application's structure and the relationships between its components.
+Loose coupling is what we aim for when we structure an app and its components.
 
 <img src="/tech/componentization/loosely-coupled.jpeg" alt="loosely-coupled.jpeg" width="40%">
 
-**Loose coupling** brings the following benefits:
+**Loose coupling** gives you:
 
-- One part can be changed without affecting the rest of the application
-- Any component can be replaced with another implementation
-- Components can be reused across the whole application, which avoids duplicated code
-- Independent components are easier to test, which raises test coverage
+- Changes in one area that don't ripple into the rest
+- Components you can swap for another implementation
+- Reuse across the app instead of duplicated code
+- Independent components that are easier to test
 
-
-A tightly coupled system, on the other hand, loses the benefits described above. The main drawback is that a component that depends heavily on other components is hard to change. Even a single change can force a whole chain of dependent components to change too.
+  
+Tight coupling loses all of that: a component that leans on many others is hard to change, and a single change can cascade through everything that depends on it.
 
 <img src="/tech/componentization/tighly-coupled.jpeg" alt="tighly-coupled.jpeg" width="40%">
 
-**Encapsulation**, or **information hiding**, is a basic principle of how to design components, and the key to loose coupling.
+**Encapsulation**, or **information hiding**, is the basic principle of component design and the key to loose coupling.
 
 ## Information hiding
 
-- Setting refs, owning state, using lifecycle methods...
-
+- Refs, state, lifecycle methods... stay inside the component.
+	
 ## Communication
 
 - props
-
-Props are best kept to primitive data (for example string, number, boolean):
+	
+Prefer primitive values for props (string, number, boolean):
 
 ```jsx
 	<Message text="Hello world!" modal={false} />;
 ```
-When needed, use complex data structures such as objects or arrays:
+Reach for objects or arrays when you need them:
 
 ```jsx
 	<MoviesList items={['Batman Begins', 'Blade Runner']} />
 ```
 
-A prop can be an event handler or an async function:
+Props can be event handlers or async functions:
 
 ```jsx
 	<input type="text" onChange={handleChange} />
 ```
 
-A prop can even be a component constructor. The component can then take care of instantiating other components:
+A prop can even be a component constructor, so a component decides what gets instantiated:
 
 ```jsx
 	function If({ component: Component, condition }) {
@@ -112,13 +114,13 @@ A prop can even be a component constructor. The component can then take care of 
 	<If condition={false} component={LazyComponent} />  
 ```
 
-To avoid breaking encapsulation, watch what gets passed through props. A parent component that sets props on its children shouldn't expose any details of its internal structure. Passing whole component instances or refs through props, for example, is bad practice.
+Don't leak internals through props: a parent shouldn't hand its component instances or refs down to its children.
 
 # Composition
 
-> A composable component is built from smaller, specialized components.
+> A composable component is assembled from smaller, specific components.
 
-Composition is a way of making bigger components by putting components together. Composition is at the heart of React.
+Composition means building bigger components out of smaller ones, and it sits at the heart of React.
 
 Take a bunch of small pieces, put them together, and build one bigger fella.
 
@@ -134,8 +136,8 @@ Take a bunch of small pieces, put them together, and build one bigger fella.
 
 # Reuse
 
-> A reusable component is written once and used many times.
-
+> Write it once, use it many times.
+	
 ## Reuse within the application
 
 - Properly encapsulated components
@@ -157,24 +159,24 @@ When a component that could live apart from the business logic gets written in a
 
 ### A checklist for whether a third-party library is worth using
 
-- Documentation: check whether the library has a meaningful `README.md` file and detailed docs
-- Tested: one clear sign of a trustworthy library is high test coverage
-- Maintenance: look at how often the author adds new features, fixes bugs and does routine upkeep  
+- Docs: a useful `README.md` file and real documentation
+- Tests: good test coverage is a strong sign you can trust it
+- Maintenance: how actively features, fixes and upkeep keep coming  
 
 # Meaningful
 
-> A meaningful component makes it easy to understand what it does.
+> A meaningful component makes its purpose obvious.
+	
+Why readability matters:
 
-Why code readability matters:
-
-Developers spend most of their time reading and understanding code, not actually writing it. We spend 75% of our time understanding code, 20% changing existing code, and only 5% writing new code.  
+We read and puzzle over code far more than we write it; one common estimate splits the time 75% understanding, 20% changing existing code and 5% writing new code.  
 emm......  
 
 ## Naming components
 
 ### Pascal Case
 
-A component name is one or more Pascal-case words (mostly nouns) strung together, for example `<DatePicker>, <GridItem>, <Application>, <Header>`.
+Component names are one or more Pascal-case words (mostly nouns) joined together, for example `<DatePicker>, <GridItem>, <Application>, <Header>`.
 
 ### Be specific
 
@@ -196,22 +198,22 @@ A component name is one or more Pascal-case words (mostly nouns) strung together
 
 <img src="/tech/componentization/expressiveness.jpeg" alt="expressiveness.jpeg" width="50%">
 
-The lower a component sits on the staircase, the more effort it takes to understand.
+The further down the staircase you have to go, the harder the component is to understand.
 
 Read open-source projects and borrow from them a lot ✔️
 
 
 # Continuous improvement
 
-Sometimes it's almost impossible to get the component structure right on the first try, because:  
+Getting the component structure right on the first try rarely happens, because:  
 
-- A tight project schedule doesn't leave enough time for system design
-- The approach picked at the start was wrong
-- You just found an open-source library that solves the problem better
+- The schedule is too tight for proper design
+- The first approach turned out to be wrong
+- A better open-source library just turned up
 - ~~Didn't sleep enough, in a bad mood~~
 - Or any other reason
 
-The more complex a component is, the more it needs checking and refactoring.  
+The more complex a component gets, the more it needs checking and refactoring.  
 <img src="/tech/componentization/improvement.jpeg" alt="improvement.jpeg" width="60%">
 
 The ultimate solution: write reliable components ✔️ 
