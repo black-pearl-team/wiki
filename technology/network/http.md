@@ -1,167 +1,171 @@
 ---
-title: HTTP1.x、HTTP2.0、HTTPS 傻傻也要分清楚
+title: HTTP1.x, HTTP2.0 and HTTPS, No More Mixing Them Up
 description: 
 published: true
-date: 2021-01-17T10:14:15.722Z
+date: 2026-09-30T13:35:19.000Z
 tags: network, http, https
 editor: markdown
-dateCreated: 2020-11-30T15:34:57.219Z
+dateCreated: 2026-09-30T13:35:19.000Z
 ---
 
-# HTTP1.0 和 HTTP1.1 的主要区别
+**English** · [中文](/zh/technology/network/http.md)
 
-## 长连接
-HTTP1.1 支持长连接（PersistentConnection）和请求的流水线（Pipelining）处理，在一个 TCP 连接上可以传送多个 HTTP 请求和响应，减少了建立和关闭连接的消耗和延迟，在 HTTP1.1 中默认开启 Connection： keep-alive，一定程度上弥补了 HTTP1.0 每次请求都要创建连接的缺点。
-参考链接：[HTTP1.0、HTTP1.1 和 HTTP2.0 的区别](https://juejin.cn/post/6844903489596833800)
+*Much of the Chinese page is compiled from two Chinese articles (linked below); this English page sums the points up in our own words instead of translating them.*
 
-## HTTP1.1 如何解决 HTTP 的队头阻塞（head-of-line blocking）问题？
-【HTTP队头阻塞问题】HTTP 传输是基于请求-应答的模式进行的，报文必须是一发一收，里面的任务被放在一个【任务队列】中串行执行，一旦队首的请求处理太慢，就会阻塞后面请求的处理。
-  1. **并发连接**
-  对于【一个域名允许分配多个长连接】，那么相当于增加了任务队列，不至于一个队伍的任务阻塞其它所有任务。在RFC2616规定过客户端最多并发 2 个连接，不过事实上在现在的浏览器标准中，这个上限要多很多，Chrome 中是 6 个。
-  > 但这并没有真正从 HTTP 本身的层面解决问题，只是增加了 TCP 连接，分摊风险而已。而且这么做也有弊端，多条 TCP 连接会竞争有限的带宽，让真正优先级高的请求不能优先处理。
-  2. **域名分片**
-  一个域名不是可以并发 6 个长连接吗？那我就多分几个域名。比如 `google.com` 域名下可以分出非常多的二级域名，而它们都指向同样的一台服务器，能够并发的长连接数更多了，事实上也更好地解决了队头阻塞的问题。
+# Main differences between HTTP1.0 and HTTP1.1
+
+## Persistent connections
+HTTP1.1 keeps connections open (PersistentConnection) and can pipeline requests (Pipelining), so many requests and responses share one TCP connection instead of paying for a new one each time; Connection: keep-alive is on by default, which fixes HTTP1.0's one-connection-per-request cost.
+Reference: [Differences between HTTP1.0, HTTP1.1 and HTTP2.0](https://juejin.cn/post/6844903489596833800) (in Chinese)
+
+## How does HTTP1.1 deal with HTTP's head-of-line blocking problem?
+[The HTTP head-of-line blocking problem] Requests and responses go strictly one after another through a [task queue], so one slow request at the front holds up everything behind it.
+  1. **Concurrent connections**
+  Allowing [several persistent connections per domain] adds more queues, so one blocked queue doesn't stop the rest. RFC2616 allowed a client 2; browsers now allow more, 6 in Chrome.
+  > This doesn't fix HTTP itself; it just spreads the risk over more TCP connections, which then fight over bandwidth and can starve the requests that matter most.
+  2. **Domain sharding**
+  If one domain gets 6 connections, use more domains: spread things over several subdomains of `google.com` that point at the same server, get more parallel connections, and ease head-of-line blocking further.
 
 ---
 
-# HTTP2.0 相对于 HTTP1.x 的改进（性能方面）
-2.0 主要在性能方面，HTTPS 在安全方面已经做的非常好了
+# How HTTP2.0 improves on HTTP1.x (performance)
+2.0 is about performance; security is HTTPS's job, and it already does it well
 
-## 一、头部压缩
+## 1. Header compression
 
-在 HTTP/1.1 及之前的时代，请求体一般会有响应的压缩编码过程，通过 `Content-Encoding` 头部字段来指定。那头部字段本身的压缩呢？
-HTTP1.x 的 header 带有大量信息，而且每次都要重复发送（当请求字段非常复杂的时候，尤其对于 GET 请求，请求报文几乎全是请求头），HTTP/2 针对头部字段，也采用了对应的压缩算法—— **HPACK**，对请求头进行压缩。
+HTTP/1.1 could compress bodies (`Content-Encoding`), but not the headers themselves.
+HTTP1.x headers are large and resent with every request (a GET is almost all headers), so HTTP/2 compresses them with **HPACK**.
 
-HPACK 算法是专门为 HTTP/2 服务的，它主要的亮点有两个：
-- 首先是在服务器和客户端之间建立【哈希表】，将用到的字段存放在这张表中，那么在传输的时候对于之前出现过的值，只需要把索引(比如0，1，2，...)传给对方即可，对方拿到索引查表就行了。这种传索引的方式，可以说让请求头字段得到极大程度的精简和复用。
-![compressheader.png](/technology/network/http/compressheader.png =70%x)
+HPACK, built for HTTP/2, does two main things:
+- Both sides keep a [hash table] of header fields, so a value seen before is sent as a short index (0, 1, 2, ...) instead of in full, which trims and reuses headers a great deal.
+<img src="/technology/network/http/compressheader.png" alt="compressheader.png" width="70%">
 
-    > 小贴士
-    HTTP/2 当中废除了起始行的概念，将起始行中的请求方法、URI、状态码转换成了头字段，不过这些字段都有一个":"前缀，用来和其它请求头区分开。
-- 其次是对于【整数和字符串进行哈夫曼编码】，哈夫曼编码的原理就是先将所有出现的字符建立一张索引表，然后让出现次数多的字符对应的索引尽可能短，传输的时候也是传输这样的索引序列，可以达到非常高的压缩率。
+    > Tip
+    HTTP/2 drops the start line: the method, URI and status code become header fields with a ":" prefix to set them apart.
+- It also applies [Huffman coding to integers and strings], giving the most frequent characters the shortest codes for a high compression rate.
 
-## 二、多路复用
-上面提到 HTTP1.1 优化对头阻塞问题的解决方式，知道这并没有从 HTTP 应用层层面解决，而是借助 TCP 传输层的能力。那么 HTTP2.0 便从 HTTP 协议本身解决了队头阻塞问题。
+## 2. Multiplexing
+HTTP1.1 only works around head-of-line blocking with more TCP connections; HTTP2.0 solves it inside the HTTP protocol itself.
 
-**新的二进制格式（Binary Format）【二进制分帧】**
+**The new binary format (Binary Format) [binary framing]**
 
-  HTTP1.x 协议里的报文（主要指的是头部）不使用二进制数据，而是**文本形式**。（文本的表现形式有多样性，文本、图片、视频等任意数据）
+  HTTP1.x messages (mainly the headers) are **text**. (Text can stand for anything: text, images, video and so on)
 
-  HTTP/2 认为明文传输对机器而言太麻烦了，不方便计算机的解析，因为对于文本而言会有多义性的字符，比如回车换行到底是内容还是分隔符，在内部需要用到状态机去识别，效率比较低。于是 HTTP/2 干脆把报文全部换成二进制格式，全部传输01串，方便了机器的解析。
+  Text is ambiguous for machines (is a line break content or a separator?) and needs a state machine to parse, which is slow, so HTTP/2 switches every message to binary.
 
-  原来 `Headers + Body` 的报文格式如今被拆分成了一个个二进制的**帧**，用 `Headers` 帧存放头部字段，`Data` 帧存放请求体数据。分帧之后，服务器看到的不再是一个个完整的 HTTP 请求报文，而是一堆乱序的二进制帧。这些二进制帧不存在先后关系，因此也就不会排队等待，也就没有了 HTTP 的队头阻塞问题。
+  A message is split into binary **frames**: `Headers` frames for the header fields and `Data` frames for the body. Frames don't have to arrive in any order, so nothing waits in line behind anything else, and head-of-line blocking at the HTTP level is gone.
 
-通信双方都可以给对方发送二进制帧，这种 **二进制帧的双向传输的序列**，也叫做 **流 (Stream)** 。HTTP/2 用流来在一个 TCP 连接上来进行多个数据帧的通信，这就是【多路复用】的概念。
+A **bidirectional sequence of binary frames** between the two sides is a **stream (Stream)**. HTTP/2 runs many streams over one TCP connection, which is what [multiplexing] means.
 
-> **既然是乱序首发，那最后如何来处理这些乱序的数据帧呢？**
-首先要声明的是，所谓的乱序，指的是不同 ID 的 Stream 是乱序的，但同一个 Stream ID 的帧一定是按顺序传输的。二进制帧到达后对方会将 Stream ID 相同的二进制帧组装成完整的请求报文和响应报文。
+> **If frames arrive out of order, how are they put back together?**
+Only frames of different streams interleave; frames with the same Stream ID always arrive in order, and the receiver reassembles each stream into its request or response.
 
-## 三、设置请求优先级
-HTTP/2 中传输的帧结构如下图所示:
-![binarystream.png](/technology/network/http/binarystream.png =65%x)
-每个帧分为**帧头**和**帧体**。先是三个字节的帧长度，这个长度表示的是帧体的长度。
+## 3. Setting request priority
+An HTTP/2 frame looks like this:
+<img src="/technology/network/http/binarystream.png" alt="binarystream.png" width="65%">
+A frame has a **frame header** and a **frame body**; the header starts with a three-byte length of the body.
 
-然后是**帧类型**，大概可以分为数据帧和控制帧两种。
-数据帧用来存放 HTTP 报文，控制帧用来管理流的传输。【（比如使用 PRIORITY 帧更改流的优先级。）】
+Next comes the **frame type**, roughly either a data frame or a control frame.
+Data frames carry HTTP messages; control frames manage streams. [(For example, using a PRIORITY frame to change a stream's priority.)]
 
-接下来的一个字节是**帧标志**，里面一共有 8 个标志位，常用的有 `END_HEADERS` 表示头数据结束，`END_STREAM` 表示单方向数据发送结束。
+Then one byte of **frame flags** (8 bits), such as `END_HEADERS` (end of the header data) and `END_STREAM` (this direction is done sending).
 
-后 4 个字节是 `Stream ID`, 也就是**流标识符**，有了它，接收方就能从乱序的二进制帧中选择出 ID 相同的帧，按顺序组装成请求/响应报文。
+The last 4 bytes are the `Stream ID`, the **stream identifier** the receiver uses to pick out and reassemble each stream's frames.
 
-以一个普通的请求-响应过程为例来说明：
-![request&response.png](/technology/network/http/request&response.png =50%x)
-最开始两者都是空闲状态，当客户端发送 Headers 帧后，开始分配 `Stream ID`, 此时客户端的流打开，服务端接收之后服务端的流也打开，两端的流都打开之后，就可以互相传递数据帧和控制帧了。
+A normal request and response goes like this:
+<img src="/technology/network/http/request&amp;response.png" alt="request&amp;response.png" width="50%">
+Both sides start idle; the client's Headers frame opens a stream with a new `Stream ID`, the server opens its side when it receives it, and then both can send data and control frames.
 
-当客户端要关闭时，向服务端发送 `END_STREAM` 帧，进入半关闭状态, 这个时候客户端只能接收数据，而不能发送数据。
+To close, the client sends `END_STREAM` and becomes half-closed: it can still receive but not send.
 
-服务端收到这个 `END_STREAM` 帧后也进入半关闭状态，不过此时服务端的情况是只能发送数据，而不能接收数据。随后服务端也向客户端发送 `END_STREAM` 帧，表示数据发送完毕，双方进入关闭状态。
+The server, on receiving `END_STREAM`, is half-closed the other way round (it can send, not receive), then sends its own `END_STREAM`, and the stream is closed.
 
-如果下次要开启新的流，流 ID 需要自增，直到上限为止，到达上限后开一个新的 TCP 连接重头开始计数。由于流 ID 字段长度为 4 个字节，最高位又被保留，因此范围是 0 ~ 2的 31 次方，大约 21 亿个。
+Each new stream takes the next ID; when the IDs run out, a new TCP connection starts counting again. The field is 4 bytes with the top bit reserved, so there are 2 to the 31st power IDs, about 2.1 billion.
 
-流传输的特性:
-  - 并发性。一个 HTTP/2 连接上可以同时发多个帧，这一点和 HTTP/1 不同。这也是实现多路复用的基础。
-  - 自增性。流 ID 是不可重用的，而是会按顺序递增，达到上限之后又新开 TCP 连接从头开始。
-  - 双向性。客户端和服务端都可以创建流，互不干扰，双方都可以作为发送方或者接收方。
-  - 可设置优先级。可以设置数据帧的优先级，让服务端先处理重要资源，优化用户体验。
+Stream characteristics:
+  - Concurrency. One HTTP/2 connection carries many frames at once, unlike HTTP/1; this is the basis of multiplexing.
+  - Incrementing. Stream IDs are never reused; they only go up, and a new TCP connection starts over.
+  - Bidirectionality. Client and server can both open streams, and either can send or receive.
+  - Settable priority. Frames can be prioritized so the server handles important resources first.
 
 
-## 四、服务器推送（Server Push）
-在 HTTP/2 当中，服务器已经不再是完全被动地接收请求，响应请求，它也能新建 stream 来给客户端发送消息，当 TCP 连接建立之后，比如浏览器请求一个 HTML 文件，服务器就可以在返回 HTML 的基础上，将 HTML 中引用到的其他资源文件一起返回给客户端，减少客户端的等待。
+## 4. Server Push
+An HTTP/2 server doesn't just answer requests; it can open streams itself. When the browser asks for an HTML file, the server can push the resources that HTML references along with it, so the client waits less.
 
 ---
 
 # HTTPS
 
-HTTPS 并非是应用层的一种新协议。只是 HTTP 通信接口部分用 SSL 和 TLS 协议代替而已。
+HTTPS isn't a new application-layer protocol; it's HTTP with its communication layer swapped for SSL/TLS.
 
-SSL 即 **安全套接层（Secure Sockets Layer）**，在 OSI 七层模型中处于会话层(第 5 层)。
-之前 SSL 出过三个大版本，当它发展到第三个大版本的时候才被标准化，成为 **TLS（传输层安全，Transport Layer Security）**，现在主流的版本是 TLS/1.2。
+SSL, the **Secure Sockets Layer**, sits at the session layer (layer 5) of the OSI seven-layer model.
+After three major versions, SSL was standardized as **TLS (Transport Layer Security)**; TLS/1.2 is the mainstream version now.
 
-HTTPS协议，它比HTTP协议相比多了以下优势：
-- 身份认证：第三方无法伪造服务端（客户端）身份
-- 数据隐私性：内容经过对称加密，每个连接生成一个唯一的加密密钥
-- 数据完整性：内容传输经过完整性校验
+HTTPS adds three things over HTTP:
+- Authentication: a third party can't impersonate the server (or the client)
+- Privacy: content is symmetrically encrypted with a unique key for each connection
+- Integrity: content is checked for tampering in transit
 
-**所谓HTTPS，其实就是身披SSL协议这层外壳的HTTP。**
-在采用SSL后，HTTP就拥有了HTTPS的加密、证书和完整性保护这些功能。
+**In short, HTTPS is HTTP wrapped in SSL.**
+With SSL, HTTP gains encryption, certificates and integrity protection.
 
-![https.png](/technology/network/http/https.png  =50%x)
+<img src="/technology/network/http/https.png" alt="https.png" width="50%">
 
-TLS/SSL 的功能实现主要依赖于三类基本算法：
-- 非对称加密：实现身份认证和密钥协商
-- 对称加密：采用协商的密钥对数据加密
-- 散列函数：验证信息的完整性
+TLS/SSL rests on three kinds of basic algorithms:
+- Asymmetric encryption: for authentication and key exchange
+- Symmetric encryption: for encrypting data with the agreed key
+- Hash functions: for checking integrity
 
-## 解决内容可能被窃听的问题——加密
-在交换密钥环节使用非对称加密方式，之后的建立通信交换报文阶段则使用对称加密方式。
+## Solving possible eavesdropping on content: encryption
+Asymmetric encryption is used to exchange a key, then symmetric encryption for the rest of the conversation.
 
-具体做法是：
-发送密文的一方使用对方的公钥进行加密处理“对称的密钥”，然后对方用自己的私钥解密拿到“对称的密钥”，这样可以确保交换的密钥是安全的前提下，使用对称加密方式进行通信。所以，HTTPS采用对称加密和非对称加密两者并用的混合加密机制。
+In practice:
+The sender encrypts a symmetric key with the receiver's public key, the receiver decrypts it with its private key, and from then on both sides use that symmetric key. So HTTPS combines both kinds of encryption.
 
-## 解决报文可能遭篡改问题——数字签名
-网络传输过程中需要经过很多中间节点，虽然数据无法被解密，但可能被篡改，那如何校验数据的完整性呢？----校验数字签名。
+## Solving possible tampering with messages: digital signatures
+Data passing through many intermediate nodes can't be read, but it could still be altered; a digital signature is how integrity gets checked.
 
-数字签名有两种功效：
-- 能确定消息确实是由发送方签名并发出来的，因为别人假冒不了发送方的签名。
-- 数字签名能确定消息的完整性,证明数据是否未被篡改过。
+A digital signature does two things:
+- It proves the message came from the sender, since nobody else can produce the sender's signature.
+- It proves the message wasn't changed along the way.
 
-    **数字签名如何生成：**
-    ![generatesignature.png](/technology/network/http/generatesignature.png =85%x)
+    **How a digital signature is generated:**
+    <img src="/technology/network/http/generatesignature.png" alt="generatesignature.png" width="85%">
 
-    发送方：将一段文本先 **用 Hash 函数生成消息摘要**，然后 **用发送者的私钥加密生成数字签名**，与原文一起传送给接收者。
+    Sender: **hash the text into a digest**, **encrypt the digest with the sender's private key** to get the signature, and send it along with the text.
 
-    **校验数字签名流程：**
-    ![checksignature.png](/technology/network/http/checksignature.png =85%x)
+    **How a digital signature is checked:**
+    <img src="/technology/network/http/checksignature.png" alt="checksignature.png" width="85%">
 
-    接收方：接收者只有 **用发送者的公钥才能解密被加密的摘要信息**，然后 **用HASH函数对收到的原文产生一个摘要信息**，与上一步得到的摘要信息对比。如果相同，则说明收到的信息是完整的，在传输过程中没有被修改，否则说明信息被修改过，因此数字签名能够验证信息的完整性。
+    Receiver: **decrypt the signature with the sender's public key** to get the digest back, **hash the received text** again, and compare the two; a match means the message arrived intact.
 
-## 解决通信方身份可能被伪装的问题——数字证书
+## Solving possible impersonation of the communicating parties: digital certificates
 
-证书颁发机构（Certificate Authority，简称CA）
-数字证书认证机构处于客户端与服务器双方都可信赖的第三方机构的立场上。
+Certificate Authority (CA for short)
+A CA is a third party that both client and server trust.
 
-数字证书认证机构的业务流程：
-- 服务器的运营人员向第三方机构 CA 提交公钥、组织信息、个人信息(域名)等信息并申请认证；
-- CA通过线上、线下等多种手段验证申请者提供信息的真实性，如组织是否存在、企业是否合法，是否拥有域名的所有权等；
-- 如信息审核通过，CA 会向申请者签发认证文件 - **证书**。
-证书包含以下信息：**申请者公钥**、申请者的组织信息和个人信息、**签发机构 CA 的信息**、有效时间、证书序列号等信息的明文，同时包含一个**签名**。
-其中签名的产生算法：首先，使用**散列函数**计算公开的明文信息的**信息摘要**；然后，采用 CA 的私钥对信息摘要进行加密，密文即**签名**；
-- 客户端 Client 向服务器 Server 发出请求时，Server 返回证书文件；
-- 客户端 Client 读取证书中的相关的明文信息，采用相同的散列函数计算得到信息摘要，然后，利用对应 CA 的公钥解密签名数据，对比证书的**信息摘要**，如果一致，则可以确认证书的合法性，即服务器的公开密钥是值得信赖的。
-（数字证书认证机构的公开密钥已事先植入到浏览器里了。）
-- 客户端还会验证证书相关的域名信息、有效时间等信息; 客户端会内置信任CA的证书信息(包含公钥)，如果CA不被信任，则找不到对应 CA的证书，证书也会被判定非法。
-![certificateauthority.png](/technology/network/http/certificateauthority.png =75%x)
+How a CA issues a certificate:
+- The server's operator sends the CA its public key, organization info and domain, and applies for certification;
+- The CA checks the details online and offline (does the organization exist, is the business legitimate, does it own the domain, and so on);
+- If everything checks out, the CA issues a **certificate**.
+A certificate holds, in plaintext, **the applicant's public key**, the applicant's organization details, **information about the issuing CA**, the validity period and the serial number, plus a **signature**.
+The signature is made by **hashing** that plaintext into a **digest** and encrypting the digest with the CA's private key;
+- When the Client connects, the Server sends its certificate;
+- The Client hashes the certificate's plaintext the same way, decrypts the signature with the CA's public key, and compares the result with the **digest**; a match proves the certificate, and so the server's public key, can be trusted.
+(Trusted CAs' public keys come built into the browser.)
+- The client also checks the certificate's domain, validity period and so on; if the issuing CA isn't one it trusts, it can't find that CA's certificate and rejects the server's certificate.
+<img src="/technology/network/http/certificateauthority.png" alt="certificateauthority.png" width="75%">
 
 
-参考链接：[深入理解HTTPS工作原理](https://github.com/ljianshu/Blog/issues/50)
+Reference: [An in-depth look at how HTTPS works](https://github.com/ljianshu/Blog/issues/50) (in Chinese)
 
-最后：
+Finally:
 
 ![httpsflow.png](/technology/network/http/httpsflow.png)
 
 
-# 总结
-- HTTPS 是对 HTTP 的安全方面优化
-- HTTP2.0 是对 HTTP 的性能方面优化
+# Summary
+- HTTPS optimizes HTTP for security
+- HTTP2.0 optimizes HTTP for performance
 
-![summary.png](/technology/network/http/summary.png =65%x)
+<img src="/technology/network/http/summary.png" alt="summary.png" width="65%">

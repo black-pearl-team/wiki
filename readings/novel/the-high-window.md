@@ -1,65 +1,67 @@
 ---
-title: 《高窗》介绍及人物备忘录
+title: The High Window — Introduction and Character Notes
 description: 
 published: true
-date: 2022-12-14T13:56:59.257Z
-tags: 小说
+date: 2026-09-30T13:35:19.000Z
+tags: novel
 editor: markdown
-dateCreated: 2022-12-14T13:50:22.920Z
+dateCreated: 2026-09-30T13:35:19.000Z
 ---
 
+**English** · [中文](/zh/readings/novel/the-high-window.md)
 
-## 介绍
 
-- 书名：The High Window
-- 中文译名：高窗
-- 类别：小说/侦探小说
-- 推荐译本：新星出版社，傅惟慈
+## Introduction
 
-1942，钱德勒的第三部长篇小说。
+- Title: The High Window
+- Chinese title: 高窗
+- Category: novel / detective fiction
+- Recommended Chinese translation: Fu Weici, New Star Press
 
-## 人物备忘录
+1942, Chandler's third novel.
 
-p.s.: 列表按照人物出场顺序记录，可在阅读途中忘记人物时参考。
+## Character Notes
 
-伊丽莎白·布赖特·默多克夫人：事件委托人，丢了金币。
+p.s.: The list follows the order in which the characters appear; check it whenever you forget who someone is while reading.
 
-贾斯珀·默多克：有着络腮胡，“他一生为他人服务。”
+Mrs. Elizabeth Bright Murdock: the client, lost a gold coin.
 
-梅尔·戴维斯小姐：默多克夫人的秘书。
+Jasper Murdock: full beard; remembered as a man who spent his life serving others.
 
-琳达·康奎斯特（莱斯利·默多克夫人）：委托人的儿媳妇。
+Miss Merle Davis: Mrs. Murdock's secretary.
 
-以利沙·莫宁斯塔：钱币经销商，他的办公室位于洛杉矶城区第九大道的贝尔丰特大厦。
+Linda Conquest (Mrs. Leslie Murdock): the client's daughter-in-law.
 
-洛伊斯·马吉克：戴维斯小姐的话，“我只见过她一次。她以前和琳达合住一个套间。她和一位先生——瓦尼尔先生一起来这儿的。”
-瓦尼尔：“他住在谢尔曼橡树区。艾斯卡米罗公路的尽头。真正的尽头。”
+Elisha Morningstar: a coin dealer, his office is in the Belfont Building on Ninth Street, downtown Los Angeles.
 
-亚历克斯·莫尔尼：貌似莱斯利·默多克欠了他一万两千块。娶了洛伊斯·马吉克。
+Lois Magic: Miss Davis had met her only once; she used to share an apartment with Linda, and came by with a gentleman, a Mr. Vannier.
+Vannier: lives in Sherman Oaks, at the very end of Escamillo Drive.
 
-肯尼·赫斯特：《纪事报》的罪案记者。
+Alex Morny: it seems Leslie Murdock owes him twelve thousand. Married Lois Magic.
 
-格尔蒂·阿伯加斯特：提供消息给赫斯特的人。
+Kenny Haste: crime reporter at the Chronicle.
 
-亚瑟·布莱克·波帕姆：卷入一宗邮政诈骗案，破产，房子卖给了亚力克斯·莫尔尼。
+Gertie Arbogast: the one who feeds Haste his tips.
 
-薛夫提：莫尔尼家的司机。
+Arthur Blake Popham: caught up in a mail fraud case, went bankrupt, sold his house to Alex Morny.
 
-乔治·安森·菲利普斯：秘密调查。好莱坞，威尔科克斯北大街1924号，森杰大厦212室。法院街128号佛罗伦萨公寓204室。
+Shifty: the Morny household's chauffeur.
 
-彼德罗·巴勒莫：“拥有那家殡仪馆。拥有这幢楼以及其他许多楼房。事实上拥有这整个街区。”
-帕斯莫尔：公寓管理员。
+George Anson Phillips: a private investigation. Room 212, Senger Building, 1924 North Wilcox Avenue, Hollywood. Apartment 204, Florence Apartments, 128 Court Street.
 
-杰西·布雷兹：探长。
-斯潘格勒探长。
+Pietro Palermo: owns the funeral parlor, this building and plenty of others; in fact, the whole block.
+Passmore: the apartment manager.
 
-德尔马·B·亨奇，45岁，酒吧侍者，失业。
-梅贝尔·马斯特斯，26岁，舞女。
+Jesse Breeze: a detective lieutenant.
+Detective Spangler.
 
-格拉迪斯·克莱恩：布雷兹探长去马洛家的那晚打来电话请马洛过去找她，说是遇到大麻烦了，住在兰帕特的诺曼底旅馆。
+Delmar B. Hench, 45, bartender, out of work.
+Mabel Masters, 26, dancer.
 
-埃迪·普鲁：莫尔尼的跟班。
+Gladys Crane: called the night Lieutenant Breeze went to Marlowe's place, asking Marlowe to come and see her because she was in big trouble; staying at the Normandy on Rampart.
 
-H·R·蒂格尔，牙科实验室：掏出来的东西中有张牙科供应商的账单。它就是那张开给H·R·蒂格尔的付款单，购买30磅克尔牌白硅石和25磅瓦尔特牌阿尔巴石。（蒂格尔的住址：托伯曼大街1354B号。）
+Eddie Prue: Morny's sidekick.
 
-卡尔·莫斯：马洛认识的医生。
+H. R. Teager, dental laboratory: among the things pulled out was a bill from a dental supplier. It was the invoice made out to H. R. Teager, for 30 pounds of Kerr's white cristobalite and 25 pounds of Walter's Albastone. (Teager's address: 1354B Toberman Street.)
+
+Carl Moss: a doctor Marlowe knows.

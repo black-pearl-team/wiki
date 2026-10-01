@@ -1,119 +1,121 @@
 ---
-title: 诗和远方的浪涛
-description: Welcome aboard~ 这是两个海盗的寻宝图，也是两个学渣的世界学笔记。请随意参观 :)
+title: Waves of Poetry and Faraway Shores
+description: Welcome aboard~ This is the treasure map of two pirates, and the World Studies notebook of two slacker students. Feel free to look around :)
 published: true
-date: 2024-07-20T05:33:30.445Z
+date: 2026-09-28T11:19:16.000Z
 tags: home, index
 editor: markdown
-dateCreated: 2020-11-30T13:27:26.146Z
+dateCreated: 2026-09-28T11:19:16.000Z
 ---
 
-# 引言
+**English** · [中文](/zh/home.md)
 
-本维基记录了[`@海德拉`](https://blog.jovipro.com/)和[`@海扎克`](https://hijack.rocks/)两位同学的成长积累。所有内容来源于我们各自维护的印象笔记本，经过梳理后发布于此。
+# Introduction
 
-- **关于我们**
-  我们从事互联网技术研发、产品和设计方向，希望成为不放弃思考的人，并能够为这个世界和所生活在其中的人们做出贡献。
+This wiki records how two students, [`@Hydra`](https://l-jovi.github.io/) and [`@HiJack`](https://github.com/HiJack-M), have grown and what they've gathered along the way. Everything here comes from the Evernote notebooks we each keep, sorted out and then published here.
 
-- **为什么不用博客**
-  很多从事计算机和软件工程技术领域的同学选择将自己的生活和技术内容记录于博客形式的网站上，可能是 CSDN、掘金和 Github（Github Pages） 这样的第三方平台，也可能是通过类似 Hexo、Hugo、Wordpress 和 Drupal 这样的 CMS 引擎自己搭建。无论是哪种形式，个人生活和技术内容都会混合输出到同一个站点中，我们意图使能够产生**领域内积累和输出**性质的内容和个人生活分离，最终决定以维基的形式单独承载。
+- **About us**
+  We work in internet tech R&D, product and design. We hope to be people who never give up on thinking, and to be able to contribute something to this world and the people who live in it.
 
-- **这里有什么**
-  本维基站所有内容包含我们各自技术领域和个人兴趣方向的积累。技术领域相关内容在质量上，我们期望能够覆盖到官方技术文档和手册的边界，提供**相对完整**和**经过自己思考、总结和实践**的输出。除技术之外，取决于我们二人的属性，`@海扎克`作为一名咖啡师和影视阅读爱好者会提供有趣的咖啡小百科、影评和书评推荐，`@海德拉`则是一名游戏爱好者和 ACG 阿宅，会记录有趣的游戏制作和攻略向内容。
+- **Why not a blog**
+  Many people working in computing and software engineering keep their life and their tech writing on blog-style sites. That might be a third-party platform like CSDN, Juejin (both Chinese) or GitHub (GitHub Pages), or a site built with a CMS engine like Hexo, Hugo, WordPress or Drupal. Either way, personal life and tech content end up mixed together on the same site. We wanted to keep the kind of content that makes for **accumulation and output within a field** apart from our personal lives, and in the end decided to give it a home of its own, as a wiki.
+
+- **What's here**
+  Everything on this wiki is what we've each built up in our own tech fields and personal interests. For the tech content, we hope the quality can reach as far as the edges of the official docs and manuals, offering output that is **relatively complete** and **thought through, summed up and practiced by ourselves**. Beyond tech, it comes down to who we are: `@HiJack`, a barista who loves films and books, will bring fun coffee trivia, film reviews and book recommendations, while `@Hydra`, a gamer and ACG otaku, will write up interesting game-making and walkthrough-style content.
   
-> 我认为，可以在话语的世界里分出两级。一级是圣贤的话语，这些话是自愿的捐献。另一极是沉默者的话语，这些话是强征来的税金。在这两极之间的话，全都暧昧难明：既是捐献，又是税金。
-  —— 王小波
+> I think the world of discourse can be divided into two poles. One pole is the discourse of the sages, words that are voluntary donations. The other pole is the discourse of the silent, words that are taxes levied by force. Everything said between these two poles is murky and hard to pin down: it is both donation and tax.
+  —— Wang Xiaobo (translated)
 
 
-# 指南
+# Guide
 
-## 技术应用
+## Applied Tech
 
-应用领域记录个人学以致用的经历和所得，并试图以归纳总结的方式可触及的完成体系。
-相对于自然科学的客观性，应用领域来源于人意志驱动所输出的抽象，这一部分会涉及笔者工作领域的大部分内容。
+The applied side records our experience of putting what we learn to use, and what came of it, and tries to build it into a tangible system by summing things up.
+Unlike the objectivity of natural science, applied fields grow out of abstractions driven by human will; this part covers most of the author's line of work.
 
-> 如果你想为这世界做些什么，仅有理想是不够的，你需要找条通往目标的道路并走完。
-  —— 理查德·斯托曼
+> If you want to do something for this world, ideals alone aren't enough; you have to find a road to your goal and walk it to the end.
+  —— Richard Stallman (paraphrased)
 
-### 数据结构/算法
+### Data Structures / Algorithms
 
-- [各类排序算法总结 *《大话数据结构》第九章的笔记*](/zh/technology/algorithm/sort)
+- [A Roundup of Sorting Algorithms *Notes on chapter 9 of 《大话数据结构》 (Data Structures, Plainly Told)*](/technology/algorithm/sort.md)
 {.links-list}
 
-### 客户端/前端
+### Client / Front End
 
-- [JavaScript 内存泄漏 - 垃圾回收 - ES6 处理方法 *JavaScript 内存回收、GC 的原理和处理方法*](/zh/technology/web/performance)
-- [JavaScript 类型转换 *其实也可以看成玄学*](/zh/technology/web/type-conversion)
-- [现代浏览器 - 深入理解 *对 Mariko Kosaka 所著 Inside look at modern web browser 的理解*](/zh/technology/web/inside-look-at-browser)
-- [Chrome 开发者工具使用 *浏览器开发者调试工具的使用小指南*](/zh/technology/web/chrome-devtools)
+- [JavaScript Memory Leaks - Garbage Collection - Handling in ES6 *How JavaScript memory reclamation and GC work, and how to deal with them*](/technology/web/performance.md)
+- [JavaScript Type Conversion *Honestly, you could also call it black magic*](/technology/web/type-conversion.md)
+- [Modern Browsers - A Deeper Look *Our reading of Mariko Kosaka's Inside look at modern web browser*](/technology/web/inside-look-at-browser.md)
+- [Using Chrome DevTools *A little guide to the browser's developer debugging tools*](/technology/web/chrome-devtools.md)
 {.links-list}
 
-### 操作系统
+### Operating Systems
 
-### 网络
+### Networking
 
-- [HTTP *HTTP1.x、HTTP2.0、HTTPS 区别和特性*](/zh/technology/network/http)
-- [AutoSSH *提供反向代理服务并解决 SSH 超时断开连接的问题*](/zh/technology/network/autossh)
+- [HTTP *How HTTP1.x, HTTP2.0 and HTTPS differ, and what each brings*](/technology/network/http.md)
+- [AutoSSH *Reverse proxying, and a fix for SSH connections that time out and drop*](/technology/network/autossh.md)
 {.links-list}
 
-### 服务化
+### Services
 
-- [Docker 应用和原理 *使用容器化技术搭建微服务*](/zh/technology/saas/docker)
+- [Docker in Practice and Principle *Building microservices with containerization*](/technology/saas/docker.md)
 {.links-list}
 
-### 应用设计
+### Application Design
 
-- [Componentization *组件设计原则*](/zh/technology/design/component-design)
+- [Componentization *Principles of component design*](/technology/design/component-design.md)
 {.links-list}
 
-### 工具
+### Tools
 
-- [实用在线工具 *记录工作和生活常用的在线工具，长期迭代维护*](/zh/technology/tools/online)
-- [去抖动（Debounce） *用 JavaScript 实现 Debounce 功能*](/zh/technology/tools/libs/debounce)
+- [Handy Online Tools *Online tools we use a lot at work and in life, maintained and updated over time*](/technology/tools/online.md)
+- [Debounce *Implementing debounce in JavaScript*](/technology/tools/libs/debounce.md)
 {.links-list}
 
-## 游戏馆
+## Game Hall
 
-呈现多种视角、模式和规则中构建的上层抽象，融入人类天性中浑然灵动的创意。
-该板块记录笔者接触到的优秀游戏，受个人偏爱的精华作品会发布相关的文章和攻略。
+Higher-level abstractions built up from many perspectives, modes and rules, blended with the unforced, lively creativity that is part of human nature.
+This section records the great games the author has come across; the personal favorites get their own articles and walkthroughs.
 
-> 我很少花时间来想过去的事情，也绝不会对它们以任何方式排序。我回顾的时候会觉得过去这些年干了很多很棒的活，但未来能做的事才是令我更为激动的。
-  —— 约翰·卡马克
+> I spend very little time thinking about the past, and I would never rank any of it. Looking back, I feel I've done a lot of great work over the years, but what I can do in the future is what excites me more.
+  —— John Carmack (paraphrased)
   
-### 休闲区
+### Casual Corner
 
-- [2048 体验版 *HTML5 实现的 2048 Web 版本，**WASD** 操作，没有积分功能 :)*](/zh/games/casual/2048)
+- [2048 Trial Edition *A web version of 2048 built with HTML5, played with **WASD**, no scoring :)*](/games/casual/2048.html)
 {.links-list}
 
 
 ## ACG
 
-ACG 中会推荐个人喜好的二次元优秀作品，并试图结合经历和思考完备意识形态。
-这里记录曾经对笔者产生影响的动漫或漫画作品，部分会结合题材背景和制作意图提供分析。
+In ACG we recommend the anime-style works we personally love, and try to round out a worldview through experience and reflection.
+Here we record the anime and manga that once left a mark on the author; for some, we add an analysis drawing on their subject matter, background and the intent behind their making.
 
 
-## 自然科学
+## Natural Science
 
-自然科学将观察到的事物转化为思考的抽象，并帮助我们建立意识的世界。
-笔者认为发现的过程可以概括为受外界的输入，这一部分会提供个人感兴趣的领域并结合资料和理解探寻其原理
-
-
-## 图书角
-
-带有图像和文字的集合组成了交流的媒介，为不同领域提供思想和经历的入口。
+Natural science turns what we observe into abstractions for thought, and helps us build the world of consciousness.
+The author thinks the process of discovery can be summed up as taking in input from the outside world; this part covers fields of personal interest and digs into their principles through sources and our own understanding.
 
 
-## 咖啡屋
+## Book Corner
 
-船长做的咖啡，咖啡喵说他反正也喝不出个好坏，估计就等着喝埃塞俄比亚瑰夏 ☠️
+Collections of images and words make up a medium for communication, and offer entrances to ideas and experiences from different fields.
 
 
-## 电影和音乐 
+## Coffee House
 
-主要是一些良心推荐，不能错过的作品。
+Coffee made by the captain. Coffee Meow says he can't tell good from bad anyway, and is probably just waiting for a cup of Ethiopian Geisha ☠️
+
+
+## Film and Music
+
+Mostly honest recommendations: works you shouldn't miss.
 
 ---
 
-last but not least：
+last but not least:
 
-著作权归这艘船的船员所有。商业转载请联系作者获得授权，非商业转载请注明出处 :)
+Copyright belongs to the crew of this ship. For commercial reposting, please contact the authors for permission; for non-commercial reposting, please credit the source :)

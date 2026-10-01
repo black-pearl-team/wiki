@@ -1,18 +1,18 @@
 ---
 title: Playground
-description: Formats we often use when editing this site
+description: 编辑本站常用的格式
 published: true
-date: 2026-09-30T13:35:19.000Z
+date: 2023-04-11T12:25:41.966Z
 tags: playground
 editor: markdown
-dateCreated: 2026-09-30T13:35:19.000Z
+dateCreated: 2020-11-30T15:13:25.120Z
 ---
 
-**English** · [中文](/zh/playground.md)
+[English](/playground.md) · **中文**
 
 # Markdown
 
-## Code blocks
+## 代码块
 
 ```js
 const p = new Promise((resolve, reject) => {
@@ -23,12 +23,12 @@ const p = new Promise((resolve, reject) => {
 })
 ```
 
-## Quotes
+## 引用
 
-> First of all, let there be light.
-  —— Hydra Meow-Meow
+> 首先，要有光。
+  —— 海德喵喵
 
-## Lists
+## 列表
 
 - HiJack
   - coffee
@@ -37,7 +37,7 @@ const p = new Promise((resolve, reject) => {
   - game
   - anime
 
-## Tables
+## 表格
 
 | Tables   |      Are      |  Cool |
 |----------|:-------------:|------:|
@@ -46,13 +46,13 @@ const p = new Promise((resolve, reject) => {
 | col 3 is | right-aligned |    $1 |
 
 
-# Emoji
+# 表情符号
 
 `:apple:` will produce :apple:
 `:dog:` will produce :dog:
 `:leaves:` will produce :leaves:
 
-# Tab groups
+# Tab 组
 
 ## Tabset {.tabset}
 
@@ -62,13 +62,13 @@ MiaoMiaoMiao
 ### Tab2
 BulaBulaBula
 
-# Links
+# 链接
 
 - [Google *google.com*](https://www.google.com)
 - [Github *github.com*](https://github.com)
 {.links-list}
 
-# Callouts
+# 提示区域
 
 > Please say I love you :)
 {.is-info}

@@ -1,85 +1,87 @@
 ---
-title: Webpack 应用和原理
-description: 前端工程化构建和打包工具
+title: Webpack in Practice and Principle
+description: A build and bundling tool for front-end engineering
 published: true
-date: 2021-01-14T14:05:57.042Z
+date: 2026-09-30T13:35:19.000Z
 tags: webpack
 editor: markdown
-dateCreated: 2021-01-11T15:39:33.917Z
+dateCreated: 2026-09-30T13:35:19.000Z
 ---
 
-# 引入
+**English** · [中文](/zh/technology/web/webpack.md)
 
-不同于以往对页面展示交互和数据表现的开发，越来越完善的概念和技术被注入到目前的大前端生态中。
+# Introduction
 
-## 前端工程化
+Unlike the development of the past, which was about page display, interaction and data presentation, more and more mature concepts and technologies are being poured into today's big front-end ecosystem.
 
-当下前端领域，逐渐被工程化[^1]一词衡量项目的完整性，主要指下面几个方面的综合作用，可以构建出相对高效的多人协作流程。
+## Front-end engineering
 
-### 模块化
+In the front-end field these days, how complete a project is has gradually come to be measured by the word engineering[^1]. It mainly means the combined effect of the following aspects, which together can build a fairly efficient workflow for many people working together.
 
-不同功能的文件拆分，组织为模块，可以进一步划分为
+### Modularization
 
-- 前端代码逻辑的模块化
-- 资源和样式文件的模块化
+Files with different functions are split up and organized as modules, which can be further divided into
+
+- modularization of front-end code logic
+- modularization of assets and style files
 
 > The FEE can be divided into separate packages covering different portions of the project.
 
-### 组件化
+### Componentization
 
-用设计模式的思路拆分页面为组件，每个组件可以针对不同场景进一步做多态和复用
+Split pages into components with design-pattern thinking; each component can be further made polymorphic and reused for different scenarios
 
-### 规范化
+### Standardization
 
-项目规范化，可以进一步划分为：
+Project standardization can be further divided into:
   
-- 项目结构的合理划分
-- 代码编写层面的语法和缩进规范
-- 组件、函数和工具库的统一文档输出
-- 合理的代码源版本控制逻辑
-- 组件的配色和交互视觉逻辑
+- A sensible division of the project structure
+- Syntax and indentation standards at the code-writing level
+- Unified documentation output for components, functions and utility libraries
+- Sensible version control logic for the source code
+- Color schemes and visual interaction logic for components
 
-### 测试
+### Testing
 
-结合不同的测试场景和意图，可以进一步划分为：
+Depending on the testing scenario and intent, it can be further divided into:
 
-- 与后端网络交互获取的 RESTful API 数据结构和完整性测试
-- 界面组件表现的正确性测试
-- 交互到完整业务流程的功能性测试
-- 端到端的冒烟测试
+- Tests of the data structure and completeness of the RESTful API data fetched from the backend over the network
+- Tests that UI components render correctly
+- Functional tests from interactions through to complete business flows
+- End-to-end smoke tests
 
-### 自动化
+### Automation
 
-自动化流程，可以进一步划分为：
+The automated workflow can be further divided into:
 
-- 自动化打包流程（本地或线上打包）
-- 单次提交的自动化本地语法检查和测试用例覆盖检测
-- 通过脚本、平台和容器化技术自动化部署到不同环境
-- 以及不同环境的自动化流水线持续集成，测试通过率、失败错误信息报告
+- Automated bundling (bundling locally or online)
+- Automated local syntax checks and test-case coverage checks for each commit
+- Automated deployment to different environments through scripts, platforms and containerization
+- And continuous integration through automated pipelines in different environments, with reports on test pass rates and failures
 
-### 环境隔离
+### Environment isolation
 
-将开发、测试、灰度、预发布和生产环境做隔离（具体区分几个环境视业务场景而定），并使流水线能够在不同的环境中做集成测试。
+Isolate the development, testing, canary, pre-release and production environments (exactly how many environments depends on the business), and let the pipeline run integration tests in the different environments.
 
-## 什么是 Webpack
+## What is Webpack
 
-那么 Webpack 和上一节提及的工程化又有什么关系？
+So what does Webpack have to do with the engineering mentioned in the last section?
 
-试想一下，我们编写的 JavaScript，可能在不同的模块化[^2]和语言规范（ECMAScript）[^3]支持下，与不同开发组织形式的 CSS（Less、Scss）相互配合，克服诸多浏览器平台和兼容性问题，才能顺利输出展示为完整的前端页面。
+Think about it: the JavaScript we write, supported by different module systems[^2] and language specifications (ECMAScript)[^3], has to work together with CSS organized in different ways (Less, Scss) and get past lots of browser platform and compatibility problems before it can finally be output and shown as a complete front-end page.
 
-而 Webpack 作为项目模块的打包工具，依赖丰富的生态插件支持，可以配合脚本处理前端项目依赖、组件和规范化等诸多问题，我们可以以较小的代价完成上述流程的运作。
+As a bundler for project modules, backed by a rich ecosystem of plugins, Webpack can work with scripts to handle many problems such as front-end project dependencies, components and standardization, so we can get the workflow above running at a fairly small cost.
 
-![webpack.png](/technology/web/webpack/webpack.png =95%x)
+<img src="/technology/web/webpack/webpack.png" alt="webpack.png" width="95%">
 
-# 核心功能
+# Core features
 
-既然 Webpack 可以解决前端工程化的部分问题，接下来我们便结合文档，一步步理解该工具的使用方式，然后结合使用场景思考其原理和实现方法。
+Since Webpack can solve part of the problems of front-end engineering, next we'll go through the docs and understand how to use the tool step by step, and then think about its principles and implementation in light of the use cases.
 
-## 从一个简单的用例开始
+## Starting with a simple example
 
-从一个简单的示例[^4]开始理解 Webpack 如何组织并编译 JavaScript 实现的模块，最终输出到 HTML 页面中。
+We start from a simple example[^4] to understand how Webpack organizes and compiles modules written in JavaScript, and finally outputs them into an HTML page.
 
-首先创建一块新的目录区域并安装必要的 Webpack 依赖和命令行工具，我们后面所有的用例都会基于[该项目](https://github.com/L-Jovi/latte-web/tree/master/build/webpack)迭代，这里先从 [`getting-started`](https://github.com/L-Jovi/latte-web/tree/master/build/webpack/getting-started) 开始。
+First create a new directory and install the necessary Webpack dependencies and command-line tool. All our later examples iterate on [this project](https://github.com/L-Jovi/latte-web/tree/master/build/webpack), starting here with [`getting-started`](https://github.com/L-Jovi/latte-web/tree/master/build/webpack/getting-started).
 
 ```bash
 mkdir webpack-demo && cd webpack-demo
@@ -88,7 +90,7 @@ npm install webpack webpack-cli --save-dev
 mkdir getting-started && cd getting-started
 ```
 
-添加 HTML 模板和源码文件同步为下面的目录结构。
+Add an HTML template and source files so the directory matches the structure below.
 
 ```bash
 .
@@ -100,7 +102,7 @@ mkdir getting-started && cd getting-started
 
 ```
 
-添加一些简单的 JavaScript 内容到 `index.js` 中，同时为了模拟与 JQuery 相似的外部体验，这里引入了 Lodash 依赖作为工具库。
+Add some simple JavaScript to `index.js`, and to simulate an outside experience similar to JQuery, bring in Lodash as a utility library dependency.
 
 ```bash
 npm install --save lodash
@@ -120,9 +122,9 @@ function component() {
 document.body.appendChild(component())
 ```
 
-虽然 Webpack 4 开始就支持无配置执行，为便于后面的功能迭代，我们继续添加配置 `webpack.config.js` 的内容。
+Although Webpack has supported running without configuration since Webpack 4, to make the later iterations easier we go on to add a `webpack.config.js` configuration.
 
-下面的配置内容会使 Webpack 从 `src/index.js` 开始作为项目入口开始寻找所有与此文件相关联的依赖，然后将其中的 ES6 规范逻辑转换为主流浏览器可以执行的 JavaScript 并输出到 `dist/bundle.js`。
+The configuration below makes Webpack start from `src/index.js` as the project entry and look for every dependency related to this file, then convert the ES6 logic in it into JavaScript that mainstream browsers can run, and output it to `dist/bundle.js`.
 
 ```js
 const path = require('path')
@@ -136,7 +138,7 @@ module.exports = {
 }
 ```
 
-接着准备 HTML 模板，引入上述的 JavaScript 文件。
+Next, prepare the HTML template and bring in the JavaScript file above.
 
 ```html
 <!DOCTYPE html>
@@ -151,21 +153,21 @@ module.exports = {
 </html>
 ```
 
-最后使用 npx 调用 Webpack 命令运行。
+Finally, run the Webpack command with npx.
 
 ```bash
 $ npx webpack
 ```
 
-打开 `dist/index.html`，可以看到上述的 JavaScript 逻辑和外部依赖 Lodash 均被 Webpack 组织到 HTML 模板中输出，打印出 `Hello Webpack`。
+Open `dist/index.html`, and you'll see that the JavaScript logic above and the external dependency Lodash have both been organized by Webpack into the HTML template output, printing `Hello Webpack`.
 
-## 资源管理
+## Asset management
 
-上一节我们实现的项目已经可以处理 ES6 规范的逻辑到浏览器可以执行的主流 JavaScript，并将依赖的外部模块 Lodash 一并打包到最终的 `bundle.js` 中，但是真实的项目环境，我们还需要处理样式表和图片等诸多类型的资源文件。
+The project from the last section can already turn ES6 logic into mainstream JavaScript that browsers can run, and bundles the external dependency Lodash into the final `bundle.js` as well, but in a real project we also need to handle stylesheets, images and many other kinds of asset files.
 
-这一节我们针对该问题进行配置和处理，改动点可以参考 [`asset-management`](https://github.com/L-Jovi/latte-web/tree/master/build/webpack/asset-management)。
+In this section we configure things to handle that; for the changes, see [`asset-management`](https://github.com/L-Jovi/latte-web/tree/master/build/webpack/asset-management).
 
-在 `src` 目录中分别创建一个图片文件 [`icon.jpg`](https://github.com/L-Jovi/latte-web/blob/master/build/webpack/asset-management/src/icon.jpg)，一个 XML 文件 [`data.xml`](https://github.com/L-Jovi/latte-web/blob/master/build/webpack/asset-management/src/data.xml) 和一个 CSS 文件 [`style.css`](https://github.com/L-Jovi/latte-web/blob/master/build/webpack/asset-management/src/style.css)，然后改动 `src/index.js` 的逻辑。
+In the `src` directory, create an image file [`icon.jpg`](https://github.com/L-Jovi/latte-web/blob/master/build/webpack/asset-management/src/icon.jpg), an XML file [`data.xml`](https://github.com/L-Jovi/latte-web/blob/master/build/webpack/asset-management/src/data.xml) and a CSS file [`style.css`](https://github.com/L-Jovi/latte-web/blob/master/build/webpack/asset-management/src/style.css), then change the logic of `src/index.js`.
 
 ```js
 import _ from 'lodash'
@@ -192,7 +194,7 @@ function component() {
 document.body.appendChild(component())
 ```
 
-注意我们的样式文件中对 `.hello` 类名引入了上述图片作为背景图。
+Note that our stylesheet gives the `.hello` class the image above as its background.
 
 ```css
 .hello {
@@ -201,17 +203,17 @@ document.body.appendChild(component())
 }
 ```
 
-你可能已经意识到了，我们一直使用 ES6 作为开发语言，而 Webpack 通过其模块[^5]功能可以对不同类型的文件和不同规范化的 JavaScript 语法做处理，即为 Webpack 视角的模块化支持，如果不依赖生态提供的模块能力，Webpack 原生就支持下面几种模块类型。
+You may have noticed that we've been writing ES6 all along, and Webpack, through its modules[^5] feature, can handle different types of files and JavaScript syntax following different standards; this is modularization support from Webpack's point of view. Without relying on the module abilities the ecosystem provides, Webpack natively supports these module types.
 
-- ECMAScript 模块
-- CommonJS 模块（Node.js 使用的模块系统）
-- AMD 模块
-- 资源文件
-- WebAssembly 模块
+- ECMAScript modules
+- CommonJS modules (the module system Node.js uses)
+- AMD modules
+- Assets
+- WebAssembly modules
 
-本例中，还需要分别对上面添加的三种文件类型做 Webpack 配置处理，修改 `webpack.config.js` 通过 `module` 属性针对不同类型文件做正则表达式匹配并选择依赖对应的模块 loader 去处理。
+In this example, each of the three file types added above also needs Webpack configuration: change `webpack.config.js` so that the `module` property matches the different file types with regular expressions and picks the corresponding module loader to process them.
 
-这里以 CSS 处理为例，Webpack 匹配到后缀为 `.css` 的文件时，发现需要处理的 loader 是多个，便会以**相反**的顺序链式调用，首先通过 `css-loader` 对 `index.js` 中 `import './style.css'` 引入的 CSS 文件进行编译，然后将输出的结果传递给下一个模块 `style-loader`，添加样式到最终的 HTML 模板 `<head>` 标签中。
+Take CSS as the example. When Webpack matches a file ending in `.css` and finds that several loaders need to process it, it calls them as a chain in **reverse** order: first `css-loader` compiles the CSS file brought in by `import './style.css'` in `index.js`, then the output is passed to the next module, `style-loader`, which adds the styles to the `<head>` tag of the final HTML template.
 
 ```js
 const path = require('path')
@@ -260,19 +262,19 @@ module.exports = {
 }
 ```
 
-最后在 `package.json` 同层级的目录中安装上述模块处理依赖，成功后再次执行 `npx webpack` 就可以看到 `dist` 中输出的结果了。
+Finally, install the module-handling dependencies above in the same directory as `package.json`; once that succeeds, run `npx webpack` again and you'll see the output in `dist`.
 
 ```bash
 yarn add style-loader css-loader file-loader csv-loader xml-loader -D
 ```
 
-## 输出管理
+## Output management
 
-虽然到目前为止，我们已经可以处理项目中引入的不同类型文件和资源，但是随着项目体量的增长，不可能永远都是一个 `src/index.js` 经过打包后生成 `dist/bundle.js` 包揽一切，会有更多的模块和依赖被引入，这个时候，就需要将代码模块进行拆分。
+So far we can handle the different types of files and assets brought into the project, but as the project grows, it can't always be one `src/index.js` bundled into one `dist/bundle.js` that takes care of everything; more modules and dependencies will come in, and at that point the code modules need to be split.
 
-我们将这种拆分行为称为输出管理，本节改动点可以参考 [`output-management`](https://github.com/L-Jovi/latte-web/tree/master/build/webpack/output-management)。
+We call this kind of splitting output management; for this section's changes, see [`output-management`](https://github.com/L-Jovi/latte-web/tree/master/build/webpack/output-management).
 
-为了模拟增加的入口引用模块，我们修改 `src/index.js` 为：
+To simulate an extra module referenced from the entry, we change `src/index.js` to:
 
 ```js
 import _ from 'lodash'
@@ -295,7 +297,7 @@ function component() {
 document.body.appendChild(component())
 ```
 
-这样，不仅有从第三方依赖的 Lodash 模块，又多出来了我们自己实现的本地模块 `src/print.js`，这里我们简单提供一个打印功能即可。
+Now, besides the third-party Lodash module, there's also a local module we wrote ourselves, `src/print.js`; here we just give it a simple print function.
 
 ```js
 export default function printMe() {
@@ -303,7 +305,7 @@ export default function printMe() {
 }
 ```
 
-到上一节为止，我们都是在打包后的输出目录 `dist` 中放置一个手动维护的 `index.html` 模板，现在我们让这个流程也被 Webpack 管理起来，每次打包前先清理输出目录 `dist` 中所有现存的文件，然后通过插件生成 HTML 模板关联 Webpack 最终编译的所有输出结果。
+Up to the last section, we kept a hand-maintained `index.html` template in the bundled output directory `dist`. Now we let Webpack manage this step too: before each build, clear out every existing file in the output directory `dist`, then generate the HTML template with a plugin, linked to all of Webpack's final compiled output.
 
 ```js
 const path = require('path')
@@ -330,27 +332,27 @@ module.exports = {
 }
 ```
 
-需要注意，Webpack 通过 `plugins` 属性控制在编译的不同生命周期适时调用对应的插件，与模块不同，这里的调用是顺序进行，即为先依赖 `clean-webpack-plugin` 清理 `dist` 下的现存内容，然后调用 `html-webpack-plugin` 生成 HTML 模板关联项目依赖。
+Note that Webpack uses the `plugins` property to call the right plugins at the right moments in the different stages of compilation. Unlike modules, the calls here run in order: first `clean-webpack-plugin` clears the existing content under `dist`, then `html-webpack-plugin` is called to generate the HTML template linked to the project's dependencies.
 
-自行在外层目录安装本节新增的依赖到 `package.json`，然后运行 `npx webpack`，观察 `dist` 中的 HTML 文件，至此输出目录中的所有文件都已经被 Webpack 打包流程所管理。
+Install this section's new dependencies into `package.json` in the outer directory yourself, then run `npx webpack` and look at the HTML file in `dist`. By now every file in the output directory is managed by Webpack's bundling process.
 
-## 开发
+## Development
 
-## 代码切分
+## Code splitting
 
-## 缓存
+## Caching
 
-## 热模块替换（HMR）
+## Hot Module Replacement (HMR)
 
-## 代码裁剪
+## Tree shaking
 
-## 填充
+## Shimming
 
-## 插件
+## Plugins
 
 ## DLL
 
-# Webpack 原理
+# How Webpack works
 
 ## AST
 

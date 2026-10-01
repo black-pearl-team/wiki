@@ -1,77 +1,79 @@
 ---
-title: 实用在线工具
-description: 记录工作和生活常用的在线工具，长期迭代维护
+title: Handy Online Tools
+description: Online tools we use a lot at work and in life, maintained and updated over time
 published: true
-date: 2021-01-14T07:33:09.534Z
+date: 2026-09-30T13:35:19.000Z
 tags: tools
 editor: markdown
-dateCreated: 2020-12-30T13:08:55.189Z
+dateCreated: 2026-09-30T13:35:19.000Z
 ---
 
-根据工作和生活使用场景，区分领域和功能，提供以下常用在线工具列表。
+**English** · [中文](/zh/technology/tools/online.md)
 
-长期维护，持续迭代更新。
+Grouped by field and function, following how we use them at work and in daily life, here is a list of online tools we use a lot.
 
-# 网络
+Maintained for the long run, and updated as we go.
 
-- [ping.chinaz](http://ping.chinaz.com/)
-  提供多地发送 Ping 请求到指定服务器，用以网站测速
+# Network
+
+- [ping.chinaz](http://ping.chinaz.com/) (in Chinese)
+  Sends Ping requests from many locations to a given server, for testing a site's speed
 
 - [ping.eu](https://ping.eu/)
-  多种工具辅助检测网络环境
-  
-# 格式化
+  A range of tools to help check your network environment
+
+# Formatting
 
 - [JSON Formatter & Validator](https://jsonformatter.curiousconcept.com/)
-  JSON 格式化和语法校验
+  JSON formatting and syntax validation
 
 - [JSON Schema Lint :: JSON Schema Validator](https://jsonschemalint.com/)
-  JSON 语法检查，提供错误细节描述
-  
+  JSON syntax checking, with detailed descriptions of the errors
+
 - [HTML 2 Jade - a converter for HTML](http://html2jade.aaron-powell.com/)
-  提供 HTML 到 Jade（Pug） 模板的在线转换器
-  
+  An online converter from HTML to Jade (Pug) templates
+
 - [Esprima](https://esprima.org/)
-  在线转换 AST Parser 和语法校验的工具，还提供很多词法层面的解析功能
-  
-# 编辑开发
+  An online tool for AST parsing and syntax validation, with plenty of lexical-level analysis on top
+
+# Editing and development
 
 - [regex101](https://regex101.com/)
-  在线正则表达式调试工具，提供不同语言支持，报错分析和详细匹配描述，功能十分完备
-  
-- [dillinger](https://dillinger.io/)
-  Markdown 语法在线编辑器，提供数种第三方平台存储同步，也可以存储为 PDF 和 HTML 格式
-  
-- [tutorialspoint](https://www.tutorialspoint.com/codingground.htm)
-  支持在线不同平台的终端和 IDE 编辑调试环境
+  An online regex debugger with support for different languages, error analysis and detailed match descriptions; very complete
 
-# 图像处理
+- [dillinger](https://dillinger.io/)
+  An online Markdown editor that syncs with several third-party storage platforms, and can also save as PDF and HTML
+
+- [tutorialspoint](https://www.tutorialspoint.com/codingground.htm)
+  Online terminals and IDE environments for editing and debugging on different platforms
+
+# Image processing
 
 - [ImgFuel](https://imgfuel.com/)
-  提供常用图像处理，包含尺寸调整、裁剪、格式转换、图像编辑、水印和旋转等。部分功能收费
-  
+  Common image processing, including resizing, cropping, format conversion, image editing, watermarks and rotation. Some features are paid
+
 - [PicResize](https://picresize.com/)
-  除了基本的图像编辑外，还提供效果类功能
-  
+  Besides basic image editing, it also offers effects
+
 - [LUNAPIC](https://www3.lunapic.com/editor/)
-  提供丰富的图像效果类编辑功能，其中包含较多的艺术化效果展示
+  Rich effect-style image editing, including quite a few artistic effects
 
 - [TinyPNG](https://tinypng.com/)
-  PNG 和 JPEG 图像压缩工具，优势是最大化保留图像内容，并且能够处理低版本 Photoshop 无法处理的特殊图像
-  
-- [Favicon Generator. For real.](https://realfavicongenerator.net/)
-  网站 favicon 在线生成工具
+  A PNG and JPEG compressor; its strength is keeping as much of the image as possible, and it can handle special images that older versions of Photoshop can't
 
-# 原型和图表
+- [Favicon Generator. For real.](https://realfavicongenerator.net/)
+  An online favicon generator for websites
+
+# Prototypes and diagrams
 
 - [moqups](https://moqups.com/)
-  提供串联原型的图表和线框模型示意图
-  
+  Diagrams for linking prototypes together, plus wireframe mockups
+
 - [yuml](https://yuml.me/)
-  UML 图在线设计和编辑，风格具有简洁性和设计感
-  
+  Online UML design and editing, in a clean style with a real sense of design
+
 - [bubbl.us](https://bubbl.us/mindmap)
-  在线脑图制作
-  
+  Online mind maps
+
 - [smartsheet](https://app.smartsheet.com/b/home)
-  在线 Excel 制作，支持分享和导入。长期使用需要付费
+  Online Excel-style spreadsheets, with sharing and importing. Long-term use is paid

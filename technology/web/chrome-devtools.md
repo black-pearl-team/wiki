@@ -1,276 +1,278 @@
 ---
-title: Chrome 开发者工具使用
-description: 浏览器开发者调试工具的使用小指南
+title: Using Chrome DevTools
+description: A little guide to the browser's developer debugging tools
 published: true
-date: 2020-12-24T17:20:00.200Z
+date: 2026-09-30T13:35:19.000Z
 tags: browser, chrome
 editor: markdown
-dateCreated: 2020-12-20T11:34:33.734Z
+dateCreated: 2026-09-30T13:35:19.000Z
 ---
 
-# 前言
+**English** · [中文](/zh/technology/web/chrome-devtools.md)
 
-此文简要罗列了 Chrome 开发者工具的部分功能，看起来有点多，使用多了就记住了。（不包括 performance，这一块计划单独写一篇）。
-结合 google官方开发者工具[^1] 一起食用效果更佳。
+# Preface
+
+This article briefly lists some of the features of Chrome DevTools. It looks like a lot, but you'll remember them once you've used them enough. (Performance isn't covered; I plan to write a separate article on that part.)
+Best enjoyed together with Google's official DevTools docs[^1].
 
 
-# 通用
+# General
 
-## start 快捷键
+## Start shortcuts
 
-### 打开 Devtool
-	Ctrl + Shift + I（Windows） 或 Cmd + Opt + I（Mac）
+### Open DevTools
+	Ctrl + Shift + I (Windows) or Cmd + Opt + I (Mac)
 
-### 打开 Devtool & 审查元素
-	Ctrl + Shift + C（Windows） 或 Cmd + Opt + C（Mac）
+### Open DevTools & inspect an element
+	Ctrl + Shift + C (Windows) or Cmd + Opt + C (Mac)
 
-## 面板
+## Panels
 
-- 元素面板
-- 控制台面板
-- 源代码面板
-- 网络面板
-- 性能面板
-- 内存面板
-- 应用面板
-- 安全面板
+- Elements panel
+- Console panel
+- Sources panel
+- Network panel
+- Performance panel
+- Memory panel
+- Application panel
+- Security panel
 
 ## copying & saving
 
 - copy(...)
 	`location --> copy(location) --> paste`
 	`copy($0)`
-- Store as global (存储为一个全局变量)
-	`console --> 右击 -->  “Store as global variable”`
-- 保存堆栈信息( Stack trace )
-	`右击 × --> Save as ...`
-- 直接Copy HTML 
- 	`右击 --> save element`
+- Store as global
+	`console --> right-click -->  "Store as global variable"`
+- Save the stack trace
+	`right-click × --> Save as ...`
+- Copy HTML directly 
+ 	`right-click --> save element`
 
-## 快捷键和通用技巧
+## Shortcuts and general tips
 
-### 切换 DevTools 窗口的展示布局
+### Switch the DevTools window layout
 
 - Spot: ctrl + shift + D (⌘ + shift + D Mac) 
 - Mobile: ctrl + shift + M (⌘ + shift + M Mac) 
 
-### 切换 DevTools 的面板
+### Switch between DevTools panels
 
-- 切换左右面板: ctrl + \[ 和 ctrl + \] (Mac 对应 ⌘)
-- ctrl + 1 到 ctrl + 9 可以直接转到编号1...9的面板 (ctrl + 1转到元素面板，ctrl + 4` 转到 网络信息面板等等) P.S.: 默认禁用，DevTools --> Settings --> Preferences --> *Appearance*
+- Switch to the left/right panel: ctrl + \[ and ctrl + \] (⌘ on Mac)
+- ctrl + 1 to ctrl + 9 jump straight to panels 1...9 (ctrl + 1 goes to the Elements panel, ctrl + 4 to the Network panel, and so on) P.S.: disabled by default, DevTools --> Settings --> Preferences --> *Appearance*
 
-### 递增/递减
+### Increment/decrement
 
-调整样式:
-	通过使用 带有 或者 不带有修饰键 的 上 / 下 箭头按键， 你可以实现递增和递减 0.1 、 1 或者 10 这样数值类型的值  
+Adjusting styles:
+	The up / down arrow keys, alone or with a modifier key, nudge numeric values by 0.1, 1 or 10  
 ![addsub.png](/tech/web/chrome-devtools/addsub.png)
 
-### elements， logs， sources & network 中的查找
+### Searching in elements, logs, sources & network
 
-DevTools 中的前4个主要的面板，每一个都支持 [ctrl] + [f] 快捷方式，你可以使用对应的查询方式来查找信息:
+The first 4 main panels in DevTools all take [ctrl] + [f], each with its own kind of query:
 
-- 在 Elements 面板中 - 通过 string ，选择器 或者 XPath 来查找
-- 在 Console， Network 以及 Source 面板 - 通过区分大小写，或者可以被视为表达式的 strings， 来查找
+- In the Elements panel: search by string, selector or XPath
+- In the Console, Network and Source panels: search by case-sensitive text, or by text read as an expression
 ![find.png](/tech/web/chrome-devtools/find.png)
 
-## 使用 Command
+## Using Command
 
-Command 菜单可以帮助我们快速找到那些被隐藏起来的功能
+The Command menu is the quick way to reach features that are tucked away
 
-- 在 Chrome 的调试打开的情况下 按下 Ctrl + Shift + P ( Mac：⌘ + Shift + P )
-- 使用 DevTools 的 dropdown 按钮下的 Run Command 选项
+- With Chrome's DevTools open, press Ctrl + Shift + P ( Mac: ⌘ + Shift + P )
+- Use the Run Command option under the DevTools dropdown button
 
 ![command.png](/tech/web/chrome-devtools/command.png)
 
-### 截屏
-- 节点：Command --> screen --> node...
-- 全屏：Command --> screen --> full size...
+### Screenshots
+- Node: Command --> screen --> node...
+- Full page: Command --> screen --> full size...
 
-### 切换面板布局
-- Command --> layout   三个选项
+### Switch the panel layout
+- Command --> layout   three options
 
-### 切换主题
+### Switch the theme
 - Command --> theme
 
-## 代码块的使用
+## Using snippets
 
-### 保存代码块
-- `Source` --> `>>` --> `Snippets` --> `new & save` --> `Ctrl + Enter` ( Mac：`⌘  + Enter`)
+### Save a snippet
+- `Source` --> `>>` --> `Snippets` --> `new & save` --> `Ctrl + Enter` ( Mac: `⌘  + Enter`)
 
-### 各处都可使用代码块
-- Command --> 输入 !
+### Use snippets anywhere
+- Command --> type !
 
 # console
 
-## **关于 `$`**
+## **About `$`**
 ### `$0`
-- $0 是对当前选中的 html 节点的引用
-- $1 是对上一次选择的节点的引用
-- ... 顺推到 $4
+- $0 is a reference to the currently selected html node
+- $1 is a reference to the node selected before that
+- ... and so on up to $4
 
-可以尝试一些相关操作(例如: $1.appendChild($0))
+You can try some related operations (for example: $1.appendChild($0))
 
-### `$ 和 $$`
+### `$ and $$`
 
-如果项目中没有定义过`$`
+If the project hasn't defined `$`
 
 - `$ == querySelector`
 - `$$ == querySelectorAll`
 
 ### `$_`
 
-- `$_`: 对上次执行的结果的引用
+- `$_`: a reference to the result of the last execution
 
 ### `$i`
 
-想在开着这工具内的 console tab 下使用第三方插件，需要先安装 *Console Importer*[^2] 插件，然后按照如下方式引入即可：
+To use third-party libraries in the console tab of this tool, first install the *Console Importer*[^2] extension, then import them like this:
 
 - `$i('lodash')`
 - `$i('moment')`
 - ...
 
-## Conditional breakpoints 条件断点
+## Conditional breakpoints
 
-- 右击行号，选择 Add conditional breakpoint...（添加条件断点）
-- 已经设置: Edit breakpoint（编辑断点）
+- Right-click the line number and choose Add conditional breakpoint...
+- Once it's set: Edit breakpoint
 
 ## BreakPoints Section
 
-- 右击 --> disable all ...
+- Right-click --> disable all ...
 
 ## console.?
 
 1. console.assert
 
-2. 增强 log 的阅读体验: console.log({ var1, var2 })
+2. Make logs easier to read: console.log({ var1, var2 })
 
-3. console.table(): 适用于数组、类数组、对象，第二个参数传想看的列
+3. console.table(): works for arrays, array-likes and objects; pass the columns you want to see as the second argument
 
-4. console.dir(): 查看DOM节点所关联到的真实的js对象  
-div = $('div'): 可以创建一个DOM元素
+4. console.dir(): see the real js object tied to a DOM node  
+div = $('div'): creates a DOM element
 
-5. 监测执行时间  
-`console.time()` — 开启一个计时器  
-`console.timeEnd()` — 结束计时并且将结果在 console 中打印出来
-可以传入一个标签值
+5. Time an execution  
+`console.time()` — start a timer  
+`console.timeEnd()` — stop the timer and print the result in the console
+You can pass in a label
 
-6. "眼睛" 符号, 定义任何 JavaScript 表达式: e.g.: location.href
-7. 给 logs 加上时间戳: Command --> timestamps
-8. console.log 加上 CSS 样式: console.log('%cWhoops...','font-size: 50px; color: red;')
+6. The "eye" symbol, to define any JavaScript expression: e.g.: location.href
+7. Add timestamps to logs: Command --> timestamps
+8. Add CSS styles to console.log: console.log('%cWhoops...','font-size: 50px; color: red;')
 
 # Network
 
-1. Request initiator 显示了调用堆栈信息  
-显明了是哪个脚本的哪一行触发了请求  
-显示了在调用堆栈中触发请求的最后一步  
-会指向一些低层级的类库
+1. Request initiator shows the call stack  
+Makes it clear which line of which script triggered the request  
+Shows the last step in the call stack that triggered the request  
+Points into some lower-level libraries
 
-2. 过滤器: 可以输入字符串或正则表达式，过滤请求，Ctrl + Space显示所有可能的关键字  
+2. Filter: type a string or a regular expression to filter requests; Ctrl + Space shows every possible keyword  
 domain
 method
 ...
 
-3. 请求表：在表头上右键可以添加列（例如经常添加Method）
-initiator列: 显示调用堆栈信息，显示哪个脚本的哪一行触发了请求  
-Response Headers: 控制响应头的显示
+3. Request table: right-click the header row to add columns (for example, Method is one we often add)
+initiator column: shows the call stack, i.e. which line of which script triggered the request  
+Response Headers: controls which response headers are shown
 
-4. 重新发送 XHR 的请求（表头的Type是xhr类型的才会有）
+4. Resend an XHR request (only for requests whose Type in the table is xhr)
 
-5. XHR/fetch 断点
+5. XHR/fetch breakpoints
 ![xhr_breakpoints.png](/tech/web/chrome-devtools/xhr_breakpoints.png)
 
 
-# 元素面板
+# Elements panel
 
-## 小技巧
+## Tips
 
 ### `h`
-  通过 'h' 来隐藏元素
+  Hide an element with 'h'
 
-### 拖动 & 放置 元素
-  Elements里
+### Drag & drop elements
+  In Elements
 
-### 使用 control (按钮) 来移动元素
+### Move elements with control (the key)
   `[ctrl]` + `[⬆]` / `[ctrl]` + `[⬇]`
   \(`[⌘]` + `[⬆]` / `[⌘]` + `[⬇]` on Mac)
 
-### 元素面板中类似于基础编辑器的操作
+### Basic-editor-style operations in the Elements panel
 
-#### 编辑、撤销：
+#### Edit, undo:
 
 - `[ctrl]` + `[z]`
 - \(`[⌘]` + `[z]` on Mac)
 
-### Shadow editor 阴影编辑器
+### Shadow editor
 
-Style面板 --> box-shadow / text-shadow属性 --> 阴影方形符号
+Styles panel --> box-shadow / text-shadow property --> the square shadow symbol
 
-### Timing function editor 定时函数编辑器
+### Timing function editor
 
-如果timing 函数的值没有设置在这个简写的形式中，这个符号不会显示出来)边上的曲线符号
+The curve symbol next to it (if the timing function's value isn't set in this shorthand form, the symbol won't show up)
 
-### 插入样式规则的按钮
+### Buttons for inserting style rules
 
-把鼠标放在样式选择器的选择区域的最后时，显示可以快速的使用 Color 和 Shadow 编辑器添加 CSS 属性的按钮：
+Hover at the end of a style selector's area and buttons appear for adding CSS properties quickly through the Color and Shadow editors:
 
 - text-shadow
 - box-shadow
 - color
 - background-color
 
-### 在元素面板中展开所有的子节点
-右击节点后的 expand recursively 命令
+### Expand every child node in the Elements panel
+The expand recursively command when you right-click a node
 
-### DOM 断点
+### DOM breakpoints
 
-追踪DOM的修改  
+Track changes to the DOM  
 
-- 选择 subtree modifications :监听任何它内部的节点被 移除 或者 添加的事件
-- 选择 attribute modifications :监听任何当前选中的节点被 添加，移除 或者 被修改值的事件
-- 选择 node removal :监听被选中的元素被 移除 的事件
+- Choose subtree modifications: listens for any node inside it being removed or added
+- Choose attribute modifications: listens for any attribute of the currently selected node being added, removed or changed
+- Choose node removal: listens for the selected element being removed
 ![dom_breakpoints.png](/tech/web/chrome-devtools/dom_breakpoints.png)
 
-断点列表
+The breakpoint list
 
 ![breakpoints_hint.png](/tech/web/chrome-devtools/breakpoints_hint.png)
 
-## 颜色选择器
+## Color picker
 
 ![color_selector.png](/tech/web/chrome-devtools/color_selector.png)
 
-### 只选择你正在用的颜色
+### Pick only the colors you're using
 
-介绍颜色选择器的一部分：
+Part of what the color picker offers:
 
-- 切换到一个有色调变化的 Material 调色板
-- 自定义，可以添加和删除颜色
-- 从 CSS Variables 中选择一个你当前页面使用的样式表中存在的颜色
-- 或者所有你在页面的 CSS 中使用的颜色
+- Switch to a Material palette with shade variations
+- Custom, where you can add and remove colors
+- Pick, from CSS Variables, a color that exists in a stylesheet your current page uses
+- Or all the colors you use in the page's CSS
 
 ![color_palettes.png](/tech/web/chrome-devtools/color_palettes.png)
 
-### 直观的选择你的颜色
+### Pick your colors visually
 
-文本的调色选择器(color 属性) --> Contrast ratio(对比度):
-**文本的颜色** 与 **开发者工具认为这段文本应该有的背景颜色** 之间的对比度
+The text's color picker (color property) --> Contrast ratio:
+how **the text's color** stands against **the background DevTools assumes for this text**
 
-- 在数字边上的 “🚫” 意味着对比度太低
-- 一个 “✅” 意味着这个颜色遵从 *Web Content Accessibility Guidelines (WCAG) 2.0*[^3] 的 AA 声明，这意味着对比值至少为 3
-- “✅ ✅” 意味着满足了 AAA 声明
+- A "🚫" next to the number means the contrast is too low
+- A "✅" means the color meets the AA level of *Web Content Accessibility Guidelines (WCAG) 2.0*[^3], which means a contrast ratio of at least 3
+- "✅ ✅" means it meets the AAA level
 
 # Drawer
 
-有一组平行的选项卡，被隐藏在主窗口之下。
-这个组合被称为 `Drawer`，可在其他面板视图下查看 console 等等。
+Under the main window sits a second row of tabs.
+That row is the `Drawer`, which keeps the console and other tools at hand whichever panel you're in.
 
-### 如何打开 Drawer
-在 DevTools（任何选项卡）中时，按 `[esc]` 来显示它，再次按 `[esc]` 隐藏它
+### How to open the Drawer
+While in DevTools (any tab), press `[esc]` to show it, and press `[esc]` again to hide it
 
-### Drawer 里面到底有什么
-- 点击主页面在 Drawer的 console 面板前面的 `⋮` 图标来打开完整选项列表
+### What's actually in the Drawer
+- Click the `⋮` icon in front of the Drawer's console panel on the main page to open the full list of options
 - Command --> Drawer
 
-再看一遍所有的选项：
+One more look at all the options:
 
 - Animations
 - Changes
@@ -286,21 +288,21 @@ Style面板 --> box-shadow / text-shadow属性 --> 阴影方形符号
 - Sensors
 - What’s new
 
-### 控制传感器
-Drawer --> Sensors(传感器)
+### Control the sensors
+Drawer --> Sensors
 
-### 模拟网络状态
+### Simulate network conditions
 Drawer --> Network conditions
 
-### 拿到 source
+### Get the source
 Drawer --> Quick Source
 
-### 检查代码 coverage
+### Check code coverage
 
 Drawer --> Coverage
 ![coverage.png](/tech/web/chrome-devtools/coverage.png)
 
 
-[^1]: [google官方开发者工具](https://developers.google.com/web/tools/chrome-devtools/)
+[^1]: [Google's official DevTools docs](https://developers.google.com/web/tools/chrome-devtools/)
 [^2]: [Console Importer](https://chrome.google.com/webstore/detail/console-importer/hgajpakhafplebkdljleajgbpdmplhie/related)
 [^3]: [Web Content Accessibility Guidelines (WCAG) 2.0](https://www.w3.org/TR/UNDERSTANDING-WCAG20/conformance.html)

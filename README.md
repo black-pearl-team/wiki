@@ -2,33 +2,37 @@
 title: README
 description: 
 published: true
-date: 2021-05-07T08:40:06.269Z
+date: 2026-09-28T11:19:16.000Z
 tags: 
 editor: markdown
-dateCreated: 2020-12-27T06:13:28.058Z
+dateCreated: 2026-09-28T11:19:16.000Z
 ---
+
+**English** · [中文](/zh/README.md)
 
 # Wiki
 
-维基主站地址为 [blackpearl.fun](https://blackpearl.fun) ，即为我们两人小团队的独立域名。
+The main site of this wiki is [blackpearl.fun](https://blackpearl.fun) (not online yet), the domain of our own two-person team.
 
-## 说明
+## Notes
 
-该站基于 [Wiki.js](https://github.com/Requarks/wiki) 构建，由 [@海扎克](https://github.com/HiJackSherlock) 和 [@海德拉](https://github.com/L-Jovi) 共同维护。
+The site is built on [Wiki.js](https://github.com/Requarks/wiki) and maintained together by [@HiJack](https://github.com/HiJack-M) and [@Hydra](https://github.com/L-Jovi).
 
-以学习为目的的读者建议直接访问主站地址浏览，当前 Github 仓库双向同步站内数据，仅备份内容存根，部分资源不可访问。
+If you're here to learn, we suggest reading on the main site. This GitHub repo syncs with the site's data both ways, but it only backs up the content stubs, so some resources can't be reached from here.
+
+In this repo, English pages sit at the root and Chinese pages under `zh/`; an article has the same path on both sides.
 
 
-## 关于我们
+## About us
 
-我们从事互联网技术研发方向，希望成为不放弃思考的人，并能够为这个世界和所生活在其中的人们做出贡献。
+We work in internet tech R&D. We hope to be people who never give up on thinking, and to be able to contribute something to this world and the people who live in it.
 
-更多个人信息可以移步博客站。
+For more about each of us, see our own pages.
 
-- 海扎克
+- HiJack
 
-  [hijack.rocks](https://blog.hijack.rocks)
+  [github.com/HiJack-M](https://github.com/HiJack-M)
 
-- 海德拉
+- Hydra
 
-  [jovipro.com](https://blog.jovipro.com)
+  [l-jovi.github.io](https://l-jovi.github.io/)

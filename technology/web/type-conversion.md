@@ -1,42 +1,44 @@
 ---
-title: JavaScript 类型转换
-description: 其实也可以看成玄学
+title: JavaScript Type Conversion
+description: Honestly, you could also call it black magic
 published: true
-date: 2021-01-08T03:45:51.048Z
+date: 2026-09-30T13:35:19.000Z
 tags: javascript, type-system
 editor: markdown
-dateCreated: 2020-12-03T10:46:33.305Z
+dateCreated: 2026-09-30T13:35:19.000Z
 ---
 
-### 在 JS 中类型转换只有三种情况，分别是：
-- 转换为布尔值
-- 转换为字符串
-- 转换为数字
+**English** · [中文](/zh/technology/web/type-conversion.md)
 
-![primitivetypesconvert](/technology/web/type-conversion/primitivetypesconvert.jpg =80%x)
+### In JS there are only three kinds of type conversion:
+- to a boolean
+- to a string
+- to a number
 
-### 对象转原始类型
+<img src="/technology/web/type-conversion/primitivetypesconvert.jpg" alt="primitivetypesconvert" width="80%">
 
-对象在转换类型的时候，会调用内置的 `[[ToPrimitive]]` 函数，对于该函数来说，算法逻辑一般来说如下：
-* 如果已经是原始类型了，那就不需要转换了
-* 调用 x.valueOf()，如果转换为基础类型，就返回转换的值
-* 调用 x.toString()，如果转换为基础类型，就返回转换的值
-* 如果都没有返回原始类型，就会报错
+### Object to primitive
+
+When an object is converted, the built-in `[[ToPrimitive]]` function is called, and its algorithm generally goes like this:
+* If it's already a primitive, no conversion is needed
+* Call x.valueOf(); if that converts to a primitive, return the converted value
+* Call x.toString(); if that converts to a primitive, return the converted value
+* If neither returns a primitive, an error is thrown
 
 #### valueOf()
-方法返回指定对象的原始值。如果对象没有原始值，则valueOf将返回对象本身。
-![valueof](/technology/web/type-conversion/valueof.jpg =65%x)
+The method returns the primitive value of the given object. If the object has no primitive value, valueOf returns the object itself.
+<img src="/technology/web/type-conversion/valueof.jpg" alt="valueof" width="65%">
 
 #### toString()
-返回一个表示该对象的字符串。
-如果此方法在自定义对象中未被覆盖，toString() 返回 "[object type]"，其中 type 是对象的类型。
+Returns a string that represents the object.
+If this method isn't overridden in a custom object, toString() returns "[object type]", where type is the object's type.
 
-### 四则运算符
+### Arithmetic operators
 
-##### 加法
-- 运算中其中一方为字符串，那么就会把另一方也转换为字符串（若是对象，调用 `[[ToPrimitive]]` ）
-- 如果一方不是字符串或者数字，那么会将它转换为数字或者字符串（若是对象，调用 `[[ToPrimitive]]` ）
-- `+a` 一个加号后跟非数字类型，直接转成数字（优先级最高））
+##### Addition
+- If either side of the operation is a string, the other side is converted to a string as well (if it's an object, `[[ToPrimitive]]` is called)
+- If one side is neither a string nor a number, it's converted to a number or a string (if it's an object, `[[ToPrimitive]]` is called)
+- `+a`, a plus sign followed by a non-number type, converts it straight to a number (highest precedence)
 
 ```js
 1 + '1'     // '11'
@@ -46,8 +48,8 @@ true + true     // 2
 ('b' + 'a' + + 'a' + 'a').toLowerCase()   // 'banana'
 ```
 
-##### 除加法外
-- 只要其中一方是数字，那么另一方就会被转为数字
+##### Everything except addition
+- As long as one side is a number, the other side is converted to a number
 
 ```js
 4 * '3' // 12
@@ -55,16 +57,16 @@ true + true     // 2
 4 * [1, 2] // NaN
 ```
 
-### 比较运算符
-- 如果是对象，就通过 toPrimitive 转换对象
-- 如果是字符串，就通过 unicode 字符索引来比较
+### Comparison operators
+- If it's an object, the object is converted with toPrimitive
+- If it's a string, the comparison goes by unicode character index
 
 ### ==
-- 首先会判断两者类型是否相同：相同的话就是比大小；类型不相同就进行类型转换
-- 会先判断是否在对比 null 和 undefined，是的话就会返回 true
-- 如果值为 true 或 false，则转成 1 或 0 来继续比较
-- 判断两者类型是否为 string 和 number，是的话就会将字符串转换为 number
-- 判断其中一方是否为 object 且另一方为 string、number 或者 symbol，是的话就会把 object 转为原始类型再进行判断
+- First it checks whether the two types are the same: if they are, it compares the values; if not, it converts types
+- It checks whether null and undefined are being compared; if so, it returns true
+- If a value is true or false, it's turned into 1 or 0 and the comparison goes on
+- It checks whether the two types are string and number; if so, the string is converted to a number
+- It checks whether one side is an object and the other a string, number or symbol; if so, the object is converted to a primitive before comparing
 
 ```js
 [] == ![] // true
@@ -72,24 +74,24 @@ true + true     // 2
 1 == ![] // false
 0 == ![] // true
 ```
-第一个式子计算过程：
+How the first expression is worked out:
 ```js
 [] == ![]
-[] == !true  // ! 操作符的优先级高于 == ，所以先执行 ! 操作
-[] == false  // !true 得到的是 false
-[] == 0  // 比较规则1：如果值为true或false，则转成1或0来继续比较
-[] == 0  // 执行左侧的 [] 的 valueOf 方法，而 [] 是对象，所以 [].valueOf() 返回本身 []
-"" == 0 // 执行左侧的 [] 的 toString 方法，[].toString() 返回 ""
-0 == 0  // 比较规则2：如果一个值是数字，一个值是字符串，则把字符串转换为数字，再进行比较，"" 转成数字是 0
-最终是执行 0 == 0 ，结果为 true
+[] == !true  // the ! operator has higher precedence than ==, so ! runs first
+[] == false  // !true gives false
+[] == 0  // comparison rule 1: if a value is true or false, turn it into 1 or 0 and keep comparing
+[] == 0  // call valueOf on the [] on the left; [] is an object, so [].valueOf() returns [] itself
+"" == 0 // call toString on the [] on the left; [].toString() returns ""
+0 == 0  // comparison rule 2: if one value is a number and the other a string, convert the string to a number and then compare; "" becomes 0
+In the end it evaluates 0 == 0, and the result is true
 ```
 
 ![convertprocess](/technology/web/type-conversion/convertprocess.jpg)
 
-### 自己的总结
+### My own summary
 
-- 计算时，都会先将对象类型转为基本类型`[[ToPrimitive]]`
-- 加法计算**字符串**优先级最高，一侧有 string，另一侧转 string；没有 string 或 number，就转为**数字**或**字符串**（先数字再字符串）
-- 减乘除都是有数字转数字
-- `!` 后跟 x，x 直接转布尔
-- == 两边先**对象转值**，然后**布尔转数字**，然后**一侧数字一侧字符串就转数字**
+- In a calculation, object types are always turned into primitives first, via `[[ToPrimitive]]`
+- In addition, **strings** have the highest priority: if one side is a string, the other side becomes a string; with no string or number, it's converted to a **number** or a **string** (number first, then string)
+- For subtraction, multiplication and division, if there's a number, it all goes to number
+- `!` followed by x: x is converted straight to a boolean
+- For ==, both sides first go **object to value**, then **boolean to number**, then **number on one side and string on the other means converting to number**

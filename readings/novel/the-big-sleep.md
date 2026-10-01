@@ -1,64 +1,66 @@
 ---
-title: 《长眠不醒》介绍及人物备忘录
-description: 钱德勒第一篇长篇小说
+title: The Big Sleep — Introduction and Character Notes
+description: Chandler's first novel
 published: true
-date: 2022-12-26T04:31:19.749Z
-tags: 小说, 侦探小说
+date: 2026-09-28T11:19:16.000Z
+tags: novel, detective-fiction
 editor: markdown
-dateCreated: 2022-12-26T03:47:05.144Z
+dateCreated: 2026-09-28T11:19:16.000Z
 ---
 
+**English** · [中文](/zh/readings/novel/the-big-sleep.md)
 
-## 介绍
 
-- 书名：The Big Sleep
-- 中文译名：长眠不醒
-- 类别：小说/侦探小说
-- 推荐译本：江苏凤凰文艺出版社，姚向辉（只要有他的译本，就不要去看其他版本）
+## Introduction
 
-1939，钱德勒的第一部长篇小说。
-老钱能将 24 小时发生的事儿写上半本书，关键是这种节奏居然能被大众买账，大师啊大师。
+- Title: The Big Sleep
+- Chinese title: 长眠不醒
+- Category: novel / detective fiction
+- Recommended Chinese translation: Yao Xianghui, Jiangsu Phoenix Literature and Art Publishing House (if there's a translation by him, don't bother with any other version)
 
-## 人物备忘录
+1939, Chandler's first novel.
+Good old Chandler can fill half a book with what happens in 24 hours, and the kicker is that the public actually bought into that pace. A master, truly a master.
 
-p.s.: 列表按照人物出场顺序记录，可在阅读途中忘记人物时参考。
+## Character Notes
 
-盖伊·斯特恩伍德：委托人，400万美元，将军。加利福尼亚州西好莱坞，阿尔塔布雷新月路3765号。
+p.s.: The list follows the order in which the characters appear; check it whenever you forget who someone is while reading.
 
-卡门·斯特恩伍德：将军的小女儿。
+Guy Sternwood: the client, 4 million dollars, a general. 3765 Alta Brea Crescent, West Hollywood, California.
 
-薇薇安·斯特恩伍德：将军的大女儿。
+Carmen Sternwood: the General's younger daughter.
 
-诺里斯：将军的管家。
+Vivian Sternwood: the General's elder daughter.
 
-拉斯蒂·雷根：大女婿，私酒贩子。
+Norris: the General's butler.
 
-乔·布罗迪：勒索者，之前勒索了将军 5000 块。
+Rusty Regan: the elder daughter's husband, a bootlegger.
 
-亚瑟·格温·盖格：名片上写着“珍本与精装版书籍。”寄信给将军讨回卡门欠条上的 3000 美元。
+Joe Brody: a blackmailer, who once squeezed the General for 5000 bucks.
 
-欧文·泰勒：斯特恩伍德家的司机，开黑色别克大轿车。
+Arthur Gwynn Geiger: his card reads "Rare Books and De Luxe Editions." Writes to the General to collect on Carmen's IOUs for 3000 dollars.
 
-艾迪·玛斯：南边拉斯奥林达斯，柏树俱乐部。
+Owen Taylor: the Sternwood family's chauffeur, drives a big black Buick.
 
-拉里·科布：和薇薇安一起去俱乐部的花花公子。
+Eddie Mars: down south in Las Olindas, the Cypress Club.
 
-艾格尼丝·洛泽尔：盖格书店的店员，跟乔·布罗迪一伙。
+Larry Cobb: the playboy who went to the club with Vivian.
 
-卡罗尔·隆格朗：盖格的跟班，英俊小伙。
+Agnes Lozelle: the clerk at Geiger's bookstore, in with Joe Brody.
 
-塔加特·怀尔德：地区检察官。
+Carol Lundgren: Geiger's sidekick, a handsome young guy.
 
-伯尼·奥尔斯：地区检察官的首席调查员。
+Taggart Wilde: the District Attorney.
 
-克隆耶格：凶杀科警监。
+Bernie Ohls: the District Attorney's chief investigator.
 
-艾尔·格里高利：失踪人口署警监。（在马洛面前查看了泰伦斯·雷根的案卷）
+Cronjager: a captain in Homicide.
 
-哈利·琼斯：艾格尼丝叫她跟踪马洛，想卖消息。
+Al Gregory: captain of the Missing Persons Bureau. (Went through Terence Regan's file in front of Marlowe.)
 
-莫娜·格兰特：女歌手，嫁给艾迪·马斯，据说跟雷根私奔了。
+Harry Jones: Agnes had him tail Marlowe; wants to sell information.
 
-拉什·卡尼诺：艾迪·马斯的打手。
+Mona Grant: a singer, married to Eddie Mars, said to have run off with Regan.
 
-亚特·哈克：公路边的小店老板，经营修车和喷漆。多半是收赃车的窝点。
+Lash Canino: Eddie Mars's muscle.
+
+Art Huck: runs a little roadside shop doing car repairs and paint jobs. Most likely a drop for stolen cars.

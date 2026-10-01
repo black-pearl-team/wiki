@@ -1,222 +1,224 @@
 ---
-title: 现代浏览器 - 深入理解
-description: 对 Mariko Kosaka 所著 Inside look at modern web browser 的理解
+title: Modern Browsers - A Deeper Look
+description: Our reading of Mariko Kosaka's Inside look at modern web browser
 published: true
-date: 2021-05-20T06:26:25.889Z
+date: 2026-09-30T13:35:19.000Z
 tags: browser
 editor: markdown
-dateCreated: 2020-12-07T07:23:09.114Z
+dateCreated: 2026-09-30T13:35:19.000Z
 ---
 
-# 前言
+**English** · [中文](/zh/technology/web/inside-look-at-browser.md)
 
-此文可看做 Chrome 开发者 Mariko Kosaka 的[《Inside look at modern web browser》](https://developers.google.com/web/updates/2018/09/inside-browser-part1)的译文。
-网络上已存在不同版本、质量的翻译和糅杂。笔者不做糅杂，只愿结合自己的理解，呈现较流畅、平实的语言版本，加入部分专业术语的官方链接，以供参考和理解。
+# Preface
+
+This article can be read as a translation of [*Inside look at modern web browser*](https://developers.google.com/web/updates/2018/09/inside-browser-part1) by Chrome developer Mariko Kosaka.
+Translations and mash-ups of varying versions and quality already exist online. The author doesn't do mash-ups, and only wants to bring in their own understanding to present a smoother, plainer version, with official links added for some technical terms, for reference and understanding.
 
 
-> 在这个由 4 部分组成的文章中，我们将在 Chrome 浏览器中由浅至深地探索从高级架构到渲染管道细节的内容。如果您想知道浏览器如何将你的代码变成运转起来的网站，或者不确定为什么某些特定技术会被推荐用来提高性能，那么本系列适合您。
+> In this 4-part article, we'll explore the Chrome browser from the shallow end to the deep, from its high-level architecture down to the details of the rendering pipeline. If you want to know how a browser turns your code into a working website, or you aren't sure why certain techniques get recommended for improving performance, this series is for you.
 
 
-# 第一部分
+# Part 1
 
-核心计算术语、Chrome 多进程结构
+Core computing terms, Chrome's multi-process architecture
 
-## 计算机的核心是 CPU 和 GPU
+## At the core of a computer are the CPU and the GPU
 
-### 中央处理器-CPU
-中央处理器-CPU，可以视为计算机的大脑。
-一个CPU内核可以在许多不同的任务传入时一个接一个地处理。
-过去，大多数CPU都是单芯片。内核就像生活在同一芯片中的一个CPU。
+### Central processing unit - CPU
+The central processing unit, the CPU, can be thought of as the computer's brain.
+A CPU core can handle many different tasks one after another as they come in.
+In the past, most CPUs were a single chip. A core is like a CPU living in the same chip.
 
-### 图形处理单元-GPU
-图形处理单元-GPU，与CPU不同，GPU擅长处理简单任务，但同时**跨**多个内核。
+### Graphics processing unit - GPU
+The graphics processing unit, the GPU, is different from the CPU: the GPU is good at handling simple tasks, but **across** many cores at the same time.
 
 ![computerlevelstruc.png](/tech/web/browser/computerlevelstruc.png)
-（计算机体系结构的三层。**机器硬件**在底部，**操作系统**在中间，**应用程序**在顶部。）
+(The three layers of computer architecture. **Machine hardware** at the bottom, the **operating system** in the middle, **applications** on top.)
 
-## 进程 与 线程
+## Processes and threads
 
-进程可以描述为应用程序的执行程序。
-线程是存在于进程内部并由它们执行其进程程序的任何部分。
+A process can be described as an application's executing program.
+A thread is what lives inside a process and carries out any part of its process's program.
 
 ![process&thread.png](/tech/web/browser/process&thread.png)
-（进程作为边界框，线程作为抽象鱼在进程内部游动。）
+(The process as a bounding box, with threads as abstract fish swimming inside it.)
 
 ![process&threadinmemory.png](/tech/web/browser/process&threadinmemory.png)
-启动应用程序时，将创建一个进程。该程序可能会创建线程来帮助其工作，但这是可选的。
-操作系统为进程提供了一块内存，所有应用程序状态都保留在该专用内存空间中。
-当关闭应用程序时，该进程也将消失，并且操作系统会释放内存。
+When an application starts, a process is created. The program may create threads to help it work, but that's optional.
+The operating system gives the process a block of memory, and all of the application's state is kept in that private memory space.
+When the application is closed, the process goes away too, and the operating system frees the memory.
 
 ![ipc.png](/tech/web/browser/ipc.png)
-一个进程可以要求操作系统启动另一个进程来运行不同的任务。发生这种情况时，将为新进程分配内存的不同部分。
-如果两个进程需要通话，则可以使用 **进程间通信（IPC）** 进行通话。
-许多应用程序都以这种方式工作，因此，如果工作进程无响应，则可以重新启动它，而无需停止正在运行应用程序不同部分的其他进程。
+A process can ask the operating system to start another process to run a different task. When that happens, a different part of memory is allocated to the new process.
+If two processes need to talk, they can do it with **inter-process communication (IPC)**.
+Many applications work this way, so if a worker process stops responding, it can be restarted without stopping the other processes that run different parts of the application.
 
-## 浏览器结构
+## Browser architecture
 
-那么如何使用进程和线程构建 Web 浏览器？
-它可以是一个具有许多不同线程的进程，也可以是多个具有几个通过 IPC 进行通信的线程的进程。
-这里要注意的重要一点是，这些**不同的体系结构是实现细节**。这里以 Chrome 举例。
+So how is a web browser built out of processes and threads?
+It could be one process with many different threads, or many processes, each with a few threads, communicating over IPC.
+The important thing to note here is that these **different architectures are implementation details**. Chrome is the example here.
 
 ![browserstruc.png](/tech/web/browser/browserstruc.png)
-顶部是**浏览器进程**，它与负责应用程序不同部分的其他进程进行协调。
-对于**渲染器进程**，将创建多个进程并将其分配给每个选项卡。
-（直到最近，Chrome才尽可能为每个标签提供了一个进程。现在，它尝试赋予每个网站自己的进程，包括iframe。）
+At the top is the **browser process**, which coordinates with the other processes that take care of different parts of the application.
+For the **renderer process**, multiple processes are created and assigned to each tab.
+(Until recently, Chrome gave each tab a process whenever it could. Now it tries to give each site its own process, iframes included.)
 
-## 哪些进程都是管理些什么呢？
+## What does each process manage?
 
 ![kindsofprocesses.png](/tech/web/browser/kindsofprocesses.png)
 
-- **浏览器进程**
-控制应用程序的“ chrome”部分，包括地址栏，书签，后退和前进按钮。 还处理 Web 浏览器的隐形，特权部分，例如网络请求和文件访问。
+- **Browser process**
+Controls the "chrome" part of the application, including the address bar, bookmarks, and the back and forward buttons. It also handles the invisible, privileged parts of a web browser, such as network requests and file access.
 
-- **渲染器进程**
-控制显示网站的 tab 页内的所有内容。
+- **Renderer process**
+Controls everything inside the tab where a website is displayed.
 
-- **插件进程**
-控制网站使用的所有插件，例如 Flash。
+- **Plugin process**
+Controls any plugins the website uses, such as Flash.
 
-- **GPU进程**
-与其他进程隔离地处理 GPU 任务。由于 GPU 处理来自多个应用程序的请求并将它们绘制在同一表面上，因此将其分为不同的进程。
+- **GPU process**
+Handles GPU tasks in isolation from the other processes. Because the GPU handles requests from multiple applications and draws them on the same surface, it's split out into its own process.
 
-## Chrome 多进程的优势
+## Advantages of Chrome's multi-process design
 
-- **不受其他 tab 页的卡顿影响**
-假设您有 3 个标签页处于打开状态，每个标签页均由独立的渲染器进程运行。如果一个选项卡变得无响应，则可以关闭无响应的选项卡并继续运行，同时保持其他选项卡的活动状态。
-如果所有选项卡都在一个进程上运行，则当一个选项卡无响应时，所有选项卡将无响应。
+- **Not affected when another tab freezes**
+Say you have 3 tabs open, each run by its own renderer process. If one tab becomes unresponsive, you can close it and move on while the other tabs stay alive.
+If all the tabs ran in one process, then when one tab became unresponsive, all of them would.
 
-- **安全性和沙箱隔离**(内存保护、访问控制)
-由于操作系统提供了一种限制进程特权的方法，因此浏览器可以从某些功能中限制某些进程。例如，Chrome 浏览器限制了处理诸如渲染器进程之类的任意用户输入的进程的任意文件访问。
+- **Security and sandboxing** (memory protection, access control)
+Since the operating system provides a way to restrict a process's privileges, the browser can keep certain processes away from certain features. For example, Chrome restricts arbitrary file access for processes that handle arbitrary user input, like the renderer process.
 
-- **节省内存的控制**
-由于进程具有自己的私有内存空间，因此它们通常包含通用基础结构的副本（例如 V8）。这意味着更多的内存使用情况，因为如果它们是同一进程中的线程，将无法共享它们。
-为了节省内存，Chrome 对可启动的进程数量进行了限制。该限制取决于设备拥有的内存和 CPU 能力，但是 Chrome 达到限制后，它将开始在同一进程中运行同一站点的多个标签页。
+- **Memory-saving controls**
+Because processes have their own private memory space, they often contain copies of common infrastructure (V8, for example). That means more memory use, since they can't share these the way threads in the same process could.
+To save memory, Chrome limits how many processes it can start. The limit depends on the device's memory and CPU power, but once Chrome hits it, it starts running multiple tabs from the same site in the same process.
 
-## 节省更多内存 - Chrome 中的服务化
+## Saving more memory - servicification in Chrome
 
-将相同的方法应用于浏览器进程。
-Chrome 正在进行架构更改，以将浏览器程序的每个部分作为一项服务运行，从而可以轻松拆分为不同的进程或聚合为一个进程。
+The same approach is applied to the browser process.
+Chrome is going through architecture changes to run each part of the browser program as a service, so it can easily be split into different processes or combined into one.
 
-一般的想法是，当 Chrome 在功能强大的硬件上运行时，它可能会将每个服务拆分为不同的进程，从而提供更高的稳定性，但是如果在资源受限的设备上，Chrome 会将服务整合为一个进程，从而节省了内存。
+The general idea is that when Chrome runs on powerful hardware, it may split each service into a different process for more stability, but on a resource-constrained device, Chrome consolidates the services into one process to save memory.
 
-## 分帧渲染器进程 - 站点隔离
+## Per-frame renderer processes - site isolation
 
-网站隔离可为每个跨网站 iframe 运行单独的渲染器进程。
-“同源策略”[^1]是 Web 的核心安全模型。这样可以确保一个站点未经同意就无法访问其他站点的数据。绕过此策略是安全攻击的主要目标。
-**进程隔离**是分离站点的最有效方法。借助 Meltdown 和 Spectre[^2]，我们更加明显地需要使用流程来分离站点。自 Chrome 67 起，默认情况下在桌面上启用“网站隔离”，标签中的每个跨网站 iframe 都会获得单独的渲染器进程。
+Site isolation runs a separate renderer process for each cross-site iframe.
+The "same-origin policy"[^1] is the core security model of the web. It makes sure one site can't access another site's data without consent. Getting around this policy is a main target of security attacks.
+**Process isolation** is the most effective way to separate sites. With Meltdown and Spectre[^2], it became even more obvious that we need processes to separate sites. Since Chrome 67, "site isolation" is on by default on desktop, and every cross-site iframe in a tab gets a separate renderer process.
 
 
-# 第二部分
+# Part 2
 
-核心计算术语、Chrome 多进程结构
+Core computing terms, Chrome's multi-process architecture
 
-## 导航栏中会发生什么
+## What happens in navigation
 
-从一个简单的网络浏览用例开始：您在浏览器中输入一个 URL，然后浏览器从 Internet 上获取数据并显示一个页面。（面试中躲不掉的招）
-这一小节，重点介绍用户请求网站且浏览器准备呈现页面（也称为导航）的部分。
+Let's start with a simple web browsing use case: you type a URL into the browser, then the browser fetches data from the internet and displays a page. (The move you can't dodge in an interview.)
+This section focuses on the part where the user requests a site and the browser gets ready to render the page (also called navigation).
 
-## 从浏览器进程开始
+## It starts with the browser process
 
-从第一部分可知，选项卡之外的所有内容都由**浏览器进程**处理。
+From Part 1 we know that everything outside the tab is handled by the **browser process**.
 
-浏览器进程具有以下线程：
-- **UI 线程**（用于绘制浏览器的按钮和输入字段）
-- **网络线程**（用于处理网络堆栈以从 Internet 接收数据）
-- **存储线程**（用于控制对文件的访问）等等
+The browser process has the following threads:
+- The **UI thread** (draws the browser's buttons and input fields)
+- The **network thread** (deals with the network stack to receive data from the internet)
+- The **storage thread** (controls access to files), and so on
 
-在地址栏中键入 URL 时，输入的内容将由浏览器进程的 UI 线程处理。
+When you type a URL into the address bar, your input is handled by the browser process's UI thread.
 ![navigation.png](/tech/web/browser/navigation.png)
 
-## 来一个简单的导航过程
+## A simple navigation
 
-### 第一步：处理输入
+### Step 1: handling input
 
-当用户开始在地址栏中输入内容时，**UI 线程**首先问的是：“这是搜索查询还是 URL？”。
-在Chrome浏览器中，**地址栏**也是**搜索输入字段**，因此UI线程需要解析并决定是定位到搜索引擎还是请求的网站。
-- 搜索查询：发送到搜索引擎
-- URL：请求 URL 的网站
+When the user starts typing into the address bar, the first thing the **UI thread** asks is: "Is this a search query or a URL?".
+In Chrome, the **address bar** is also a **search input field**, so the UI thread needs to parse the input and decide whether to send you to a search engine or to the site you requested.
+- Search query: sent to the search engine
+- URL: request the site at that URL
 
-### 第二步：开始导航
+### Step 2: starting navigation
 
-当用户按下Enter键时，**UI 线程**会发起网络调用以获取网站内容。Loading 图标会显示在选项卡的角上，并且**网络线程**通过相应的协议为该 URL 请求查找（例如 DNS）和建立连接（例如 TLS）。
+When the user hits Enter, the **UI thread** makes a network call to get the site's content. A loading icon shows up in the corner of the tab, and the **network thread** goes through the appropriate protocols for the URL request, doing the lookup (e.g. DNS) and setting up the connection (e.g. TLS).
 ![startnavi.png](/tech/web/browser/startnavi.png)
-（UI 线程与网络线程通信，以导航到mysite.com）
+(The UI thread talks to the network thread to navigate to mysite.com)
 
-此时，网络线程可能会收到服务器的重定向状态码，例如 HTTP 301。在这种情况下，网络线程与 UI 线程进行通信，告知请求的服务器正在请求重定向。然后，将启动另一个 URL 请求。
+At this point, the network thread may get a redirect status code from the server, such as HTTP 301. In that case, the network thread tells the UI thread that the server is asking for a redirect. Then another URL request is started.
 
-### 第三步：读取响应结果
+### Step 3: reading the response
 
-#### 3.1 确定文件MIME类型
-一旦响应体（有效负载）开始进入，网络线程将在必要时查看流的前几个字节。响应的 `Content-Type` 标头应说明数据的类型，但是由于可能丢失或错误，因此在此处进行 [MIME Type 嗅探](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types)。
+#### 3.1 Working out the file's MIME type
+Once the response body (the payload) starts coming in, the network thread looks at the first few bytes of the stream if needed. The response's `Content-Type` header should say what type of data it is, but since it can be missing or wrong, [MIME Type sniffing](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types) (in Chinese) is done here.
 
-每一个浏览器在不同的情况下会执行不同的操作。因为这个操作会有一些安全问题，有的 MIME 类型表示可执行内容而有些是不可执行内容。浏览器可以通过请求头 `Content-Type` 来设置 `X-Content-Type-Options` 以阻止MIME嗅探。
+Every browser does different things in different situations. Because this operation raises some security issues, some MIME types stand for executable content and some for non-executable content. The browser can set `X-Content-Type-Options` through the request header `Content-Type` to block MIME sniffing.
 
 ![filemimetype.png](/tech/web/browser/filemimetype.png)
 
-#### 3.2 处理不同MIME文件
-如果响应是 HTML 文件，则下一步是将数据传递到**渲染进程**，但是如果是zip文件或其他文件，则意味着这是下载请求，因此他们需要将数据传递到下载管理器。
+#### 3.2 Handling different MIME files
+If the response is an HTML file, the next step is to pass the data to the **renderer process**, but if it's a zip file or some other file, that means it's a download request, so they need to pass the data to the download manager.
 
-#### 3.3 安全检查
+#### 3.3 Security checks
 
-- 恶意名单检查：如果域和响应数据在恶意站点名单中，则网络线程将发出警报以显示警告页面。
-- 跨域读取检查：跨源读取拦截（Cross Origin Read Blocking）[^3]检查，以确保敏感的跨站点数据不会进入渲染器进程。
+- Malicious list check: if the domain and the response data match a list of malicious sites, the network thread raises an alert to show a warning page.
+- Cross-origin read check: a Cross Origin Read Blocking[^3] check, to make sure sensitive cross-site data doesn't make it into the renderer process.
 ![securitycheckbynetworkthread.png](/tech/web/browser/securitycheckbynetworkthread.png)
-（网络线程检查响应数据是否为来自安全站点的 HTML）
+(The network thread checks whether the response data is HTML from a safe site)
 
-### 第四步：查找渲染进程
+### Step 4: finding a renderer process
 
-一旦完成所有检查，并且网络线程确信浏览器应导航到请求的站点，则网络线程将告知 UI 线程数据已准备就绪。
-然后，UI 线程找到一个**渲染进程**来进行网页渲染。
+Once all the checks are done and the network thread is confident the browser should navigate to the requested site, the network thread tells the UI thread that the data is ready.
+The UI thread then finds a **renderer process** to render the web page.
 ![findrendererprocess.png](/tech/web/browser/findrendererprocess.png)
 
-> **优化**
-由于网络请求可能需要几百毫秒才能获得响应，因此将应用优化来加快此过程。当 UI 线程在步骤 2 向网络线程发送 URL 请求时，它已经知道他们正在导航到哪个站点。
-**UI 线程尝试与网络请求并行地主动查找或启动渲染器进程。** 
-这样，如果一切按预期进行，则当网络线程接收到数据时，渲染器进程已经处于备用位置。如果导航跨站点重定向，则可能不会使用此备用过程，在这种情况下，可能需要其他过程。
+> **Optimization**
+Since a network request can take a few hundred milliseconds to get a response, an optimization is applied to speed this process up. When the UI thread sends the URL request to the network thread in step 2, it already knows which site they're navigating to.
+**The UI thread tries to proactively find or start a renderer process in parallel with the network request.** 
+This way, if everything goes as expected, a renderer process is already on standby by the time the network thread receives the data. If the navigation redirects cross-site, this standby process might not be used, and in that case a different process may be needed.
 
-### 第五步：提交导航
+### Step 5: committing the navigation
 
-现在已经准备好数据和渲染器进程，将 IPC 从**浏览器进程**发送到**渲染进程**以提交导航。
-它还会传递数据流，因此渲染器进程可以继续接收HTML数据。
-一旦浏览器进程听到渲染进程中的提交确认，导航即完成，文档加载阶段开始。
+Now that the data and the renderer process are ready, an IPC is sent from the **browser process** to the **renderer process** to commit the navigation.
+It also passes along the data stream, so the renderer process can keep receiving HTML data.
+Once the browser process hears the commit confirmation from the renderer process, the navigation is complete and the document loading phase begins.
 
-此时，地址栏已更新，安全指示符和站点设置UI反映了新页面的站点信息。
-选项卡的会话历史记录将被更新，因此 后退/前进 按钮将逐步浏览刚刚导航到的站点。
-为方便在关闭选项卡或窗口时恢复选项卡/会话，会话历史记录存储在磁盘上。
+At this point the address bar is updated, and the security indicator and the site settings UI reflect the site information of the new page.
+The tab's session history is updated, so the back/forward buttons will step through the sites just navigated to.
+To make it easy to restore the tab/session when you close a tab or window, the session history is stored on disk.
 
 ![commitnavigation.png](/tech/web/browser/commitnavigation.png)
 
-### 额外步骤：初始加载完成
+### Extra step: initial load complete
 
-提交导航后，渲染器进程将继续加载资源并渲染页面。
-渲染器进程“完成”渲染后，它将 IPC 发送回浏览器进程（这是在页面上所有帧上触发所有 `onload` 事件并完成执行之后）。此时，UI 线程在选项卡上停止加载 Loading 图标。
-（此处“完成”是因为客户端 JavaScript 仍然可以在此之后加载其他资源并呈现新视图。）
+After the navigation is committed, the renderer process keeps loading resources and renders the page.
+Once the renderer process "finishes" rendering, it sends an IPC back to the browser process (this is after all the `onload` events have fired on all the frames in the page and finished running). At this point, the UI thread stops the loading icon on the tab.
+("Finishes" here, because client-side JavaScript can still load extra resources and render new views after this.)
 
 ![pageloaded.png](/tech/web/browser/pageloaded.png)
 
-## 导航到其他站点
+## Navigating to a different site
 
-如果用户再次将不同的 URL 放入地址栏会发生什么？
-好吧，浏览器过程将通过相同的步骤导航到不同的站点。
-但是在这样做之前，它需要检查当前渲染的站点是否关心 `beforeunload` 事件。
+What happens if the user puts a different URL into the address bar again?
+Well, the browser process goes through the same steps to navigate to the different site.
+But before doing that, it needs to check whether the currently rendered site cares about the `beforeunload` event.
 
-beforeunload 可以在尝试导航或关闭选项卡时发出“离开此网站？”警报。选项卡内的所有内容（包括开发者的 JavaScript 代码）都由渲染器进程处理，因此，当新的导航请求出现时，浏览器进程必须与当前渲染器进程进行核对。
+beforeunload can raise a "Leave this site?" alert when you try to navigate away or close the tab. Everything inside the tab, including the developer's JavaScript code, is handled by the renderer process, so when a new navigation request comes in, the browser process has to check with the current renderer process.
 ![navitodifferentpage.png](/tech/web/browser/navitodifferentpage.png)
 
-如果导航是从**渲染进程**启动的（例如用户单击链接或客户端 JavaScript 已运行window.location =“ https://newsite.com”），则渲染进程首先检查 `beforeunload` 处理程序。然后，它经历与浏览器过程启动的导航相同的过程。
-唯一的区别是导航请求从渲染进程开始向浏览器进程启动。
+If the navigation was started from the **renderer process** (for example, the user clicked a link, or client-side JavaScript ran window.location = "https://newsite.com"), the renderer process first checks its `beforeunload` handlers. Then it goes through the same process as a navigation started by the browser process.
+The only difference is that the navigation request is kicked off from the renderer process to the browser process.
 
-当新的导航与当前渲染的站点不在同一个站点上时，将调用**一个单独的渲染过程**来处理新的导航，而当前的渲染过程将保留来处理诸如卸载之类的事件。
-有关更多信息，请参见 **页面生命周期状态概**[^4] 述以及如何使用 **页面生命周期 API**[^5] 挂载事件。
+When the new navigation is to a different site from the currently rendered one, **a separate renderer process** is called to handle the new navigation, while the current renderer process is kept around to handle events like unload.
+For more, see the **overview of page lifecycle states**[^4] and how to hook into events with the **Page Lifecycle API**[^5].
 
 ![asyncunload&navi.png](/tech/web/browser/asyncunload&navi.png)
 
 
-[^1]: [Same-origin_policy - Web | MDN](https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy)
+[^1]: [Same-origin_policy - Web | MDN](https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy) (in Chinese)
 
-[^2]: Meltdown and Spectre：一个进程可以使用该漏洞读取（最坏的情况下）任意内存，包括不属于该进程的内存。[meltdown-spectre | developers.google](https://developers.google.com/web/updates/2018/02/meltdown-spectre)
+[^2]: Meltdown and Spectre: a process can use these vulnerabilities to read (in the worst case) arbitrary memory, including memory that doesn't belong to that process. [meltdown-spectre | developers.google](https://developers.google.com/web/updates/2018/02/meltdown-spectre)
 
-[^3]: [跨源读取拦截 Cross Origin Read Blocking（CORB）](https://www.chromium.org/Home/chromium-security/corb-for-developers)
+[^3]: [Cross Origin Read Blocking (CORB)](https://www.chromium.org/Home/chromium-security/corb-for-developers)
 
 [^4]: [Page Lifecycle API  |  Web  |  Google Developers | Overview of Page Lifecycle states and events](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#overview_of_page_lifecycle_states_and_events) 
 
