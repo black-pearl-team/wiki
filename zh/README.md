@@ -12,15 +12,15 @@ dateCreated: 2020-12-27T06:13:28.058Z
 
 # Wiki
 
-维基主站地址为 [blackpearl.fun](https://blackpearl.fun)（站点暂未上线），即为我们两人小团队的独立域名。
+本仓库保存我们两人团队维基的页面内容。主站地址是 [blackpearl.fun](https://blackpearl.fun)；原站点说明记录为尚未上线。
 
 ## 说明
 
 该站基于 [Wiki.js](https://github.com/Requarks/wiki) 构建，由 [@海扎克](https://github.com/HiJack-M) 和 [@海德拉](https://github.com/L-Jovi) 共同维护。
 
-以学习为目的的读者建议直接访问主站地址浏览，当前 Github 仓库双向同步站内数据，仅备份内容存根，部分资源不可访问。
+主站把页面与站内资源放在一起供读者浏览。本 GitHub 仓库用于与站点双向同步和备份页面正文；部分资源只在站点中提供，因此从仓库阅读时可能无法访问。仓库中有这些页面，不代表主站目前已经上线。
 
-仓库内英文页面位于根目录，中文页面位于 `zh/` 目录，同一篇文章在两边的路径一一对应。
+英文页面位于根目录，中文页面位于 `zh/`；去掉语言前缀后，同一篇文章的路径相同。阅读可从[英文首页](../home.md)或[中文首页](home.md)开始，[格式示例页](playground.md)展示了本站使用的 Markdown 与 Wiki.js 写法。
 
 
 ## 关于我们

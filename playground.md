@@ -10,6 +10,8 @@ dateCreated: 2026-09-30T13:35:19.000Z
 
 **English** · [中文](/zh/playground.md)
 
+Use this page when editing an article: compare the source with its rendered result, then copy the example you need. The sections cover ordinary Markdown and the Wiki.js formatting used on this site. Keep the `{.tabset}`, `{.links-list}`, and callout markers with their examples; a GitHub preview may display them differently from the site.
+
 # Markdown
 
 ## Code blocks
