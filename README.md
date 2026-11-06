@@ -12,15 +12,15 @@ dateCreated: 2026-09-28T11:19:16.000Z
 
 # Wiki
 
-The main site of this wiki is [blackpearl.fun](https://blackpearl.fun) (not online yet), the domain of our own two-person team.
+This repository stores the page content for our two-person team's wiki. Its site address is [blackpearl.fun](https://blackpearl.fun); the original site note records it as not yet online.
 
 ## Notes
 
 The site is built on [Wiki.js](https://github.com/Requarks/wiki) and maintained together by [@HiJack](https://github.com/HiJack-M) and [@Hydra](https://github.com/L-Jovi).
 
-If you're here to learn, we suggest reading on the main site. This GitHub repo syncs with the site's data both ways, but it only backs up the content stubs, so some resources can't be reached from here.
+The wiki is designed to be read on the main site, where page content and site resources are presented together. This repository is intended to sync page text with the site in both directions and keep a backup; some resources are only available through the site. The repository alone does not establish whether that site is currently online.
 
-In this repo, English pages sit at the root and Chinese pages under `zh/`; an article has the same path on both sides.
+English pages sit at the root and Chinese pages under `zh/`; the path after the language prefix is the same for each pair. Start from [the English home page](home.md) or [the Chinese home page](zh/home.md). The [playground](playground.md) shows the Markdown and Wiki.js formatting used by the pages.
 
 
 ## About us

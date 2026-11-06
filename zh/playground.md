@@ -10,6 +10,8 @@ dateCreated: 2020-11-30T15:13:25.120Z
 
 [English](/playground.md) · **中文**
 
+编辑文章时，可以对照本页源码和显示结果，复制需要的例子。下面既有普通 Markdown，也有本站使用的 Wiki.js 格式。复制 Tab 组、链接列表或提示区域时，请一并保留 `{.tabset}`、`{.links-list}` 及对应提示标记；GitHub 的预览效果可能与站点不同。
+
 # Markdown
 
 ## 代码块
